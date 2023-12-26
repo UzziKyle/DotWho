@@ -14,7 +14,7 @@ class Secret(BaseModel):
     title = models.CharField(max_length=60, blank=True, null=False)
     content = models.TextField(max_length=280, blank=False, null=False)
     is_anonymous = models.BooleanField(default=True)
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='secret')
     
     def __str__(self) -> str:
         if self.title:

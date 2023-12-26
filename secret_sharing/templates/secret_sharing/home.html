@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+<main>
+    <ul class='secrets-container'>
+        {% for secret in secrets|dictsortreversed:"created_at" %}
+        <li class='secret-card'>
+            <div class='secret-title'>
+                {% if secret.title %}
+                {{secret.title}}
+                {% endif %}
+            </div>
+            <div class='secret-content'>
+                <p>
+                {{secret.content|truncatechars_html:120}}
+                </p>
+            </div>
+            <div class='secret-info'>
+                <span class='created_at'>
+                    {{secret.created_at}}
+                </span>
+                <span class='posted_by'>
+                    {% if secret.user %}
+                    <strong>@{{secret.user.username}}</strong>
+                    {% else %}
+                    <strong>@anonymous</strong>
+                    {% endif %}
+                </span>
+            </div>
+        </li>
+        {% empty %}
+        <li>No secrets posted yet...</li>
+        {% endfor %}
+    </ul>
+
+    <div class='form-container modal folder-form'>
+        <div class='form-frame'>
+            <h4>Hmm?</h4>
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class='button-container'>
+                    <input type="submit" value="share" />
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+{% endblock content %}

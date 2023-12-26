@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     
     'profiles',
     'secret_sharing',
+    
+    'widget_tweaks',    
 ]
 
 MIDDLEWARE = [

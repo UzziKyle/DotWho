@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <h2>Log in</h2>
+
+    <div class="form-field">
+      <input type="text" name="{{ form.username.name }}" placeholder="Username" required>
+      {% if form.username.errors %}
+      <p class="error">{{ form.username.errors.0 }}</p>
+      {% endif %}
+    </div>
+    <div class="form-field">
+      <input type="password" name="{{ form.password.name }}" placeholder="Password" required>
+      {% if form.password.errors %}
+      <p class="error">{{ form.password1.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <input id="button" type="submit" value="Log In"/>
+    <p id="register">Don't have an account? <a id="reg-link" href="#" alt="photo">Register here</a></p>
+  </form>
+</main>
+{% endblock content %}

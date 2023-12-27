@@ -14,6 +14,8 @@ class BaseModel(models.Model):
 class Profile(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(max_length=120, blank=True)
+    friends = models.ManyToManyField(User, related_name='friends', blank=True)
     
     def __str__(self) -> str:
         return f'Profile of {self.user.username}'
+    

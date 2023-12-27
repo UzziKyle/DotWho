@@ -10,8 +10,12 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     context = {}
     
-    secrets = Secret.objects.all().order_by('-created_at')
+    ordering = request.GET.get('ordering', "")
+    secrets = Secret.objects.all()
     
+    if ordering:
+        secrets = secrets.order_by(ordering)
+        
     paginator = Paginator(secrets, 3)
     page_number = request.GET.get("page")
     
@@ -50,7 +54,3 @@ def home(request):
                 
     return render(request, 'secret_sharing/home.html', context)
             
-    # model = Secret
-    # context_object_name = 'secrets'
-    # template_name = 'secret_sharing/home.html'
-    # paginate_by = 3

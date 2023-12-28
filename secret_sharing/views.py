@@ -16,8 +16,9 @@ def home(request):
     if ordering:
         secrets = secrets.order_by(ordering)
         
-    print(secrets)
-        
+    else:
+        secrets = secrets.order_by('-created_at')
+                
     paginator = Paginator(secrets, 3)
     page_number = request.GET.get("page")
     

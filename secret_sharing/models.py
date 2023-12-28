@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.fields import GenericRelation
+from comment.models import Comment
+
 
 # Create your models here.
 class BaseModel(models.Model):
@@ -15,6 +18,7 @@ class Secret(BaseModel):
     content = models.TextField(max_length=280, blank=False, null=False)
     is_anonymous = models.BooleanField(default=True)
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='secret')
+    comments = GenericRelation(Comment)
     
     def __str__(self) -> str:
         if self.title:

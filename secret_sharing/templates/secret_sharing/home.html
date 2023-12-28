@@ -23,7 +23,7 @@
                     {% endif %}
                 </div>
                 <div class="form-field">
-                    {% if not request.user.is_authenticated %} {% else %} <label for="is_anonymous">Hide Identity</label> {% endif %}
+                    {% if not request.user.is_authenticated %} {% else %} <label for="is_anonymous">Don't Share Username</label> {% endif %}
                     <input type="checkbox" name="is_anonymous" {% if not request.user.is_authenticated %} hidden
                     {% endif %} checked>
                 </div>

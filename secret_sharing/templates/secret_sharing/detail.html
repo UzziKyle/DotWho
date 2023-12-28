@@ -2,7 +2,7 @@
 
 {% block content %}
 <main>
-    <a href='{% url "home" %}'>Go back</a>
+    {% comment %} <a href='{% url "home" %}'>Go back</a> {% endcomment %}
     <div class='secret_detail-container'>
         <div class='secret_title-container'>
             {% if secret.title %}
@@ -19,6 +19,11 @@
             <h3>@anonymous</h3>
             {% endif %}    
         </div>
+    </div>
+    <div class="container mt-4">
+        {% load comment_tags %}
+        {% render_comments secret request %}
+        {% include_bootstrap %}
     </div>
 </main>
 {% endblock content %}

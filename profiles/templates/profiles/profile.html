@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+    {% if request.user.is_authenticated %}
+    <div class="profile">
+        <div class="info-container">
+            <h2>{{user.username | title }}</h2>
+            {% if profile.bio %}
+            <div class="bio">
+                <p>{{ profile.bio }}</p>
+                {% else %}
+                <p></p>
+            </div>
+            {% endif %}
+            {% if user == request.user %}
+            <a id='edit' href={% url "profile-edit" pk=request.user.id %}>Edit Profile</a>
+            {% elif is_requested_by %}
+            <a id='accept-friend' href={% url "accept-friend-request" pk=user.id %}>Accept</a>
+            <a id='decline-friend' href={% url "decline-friend-request" pk=user.id %}>Decline</a>
+            {% elif has_requested_to %}
+            <span>Waiting for Response</span>
+            {% elif not is_a_friend %}
+            <a id='add-friend' href={% url "add-friend" pk=user.id %}>Add Friend</a>
+            {% else %}
+            <a id='remove-friend' href={% url "remove-friend" pk=user.id %}>Remove Friend</a>
+            {% endif %}
+        </div>
+        <div class='friends-container'>
+            <h3>Friends</h3>
+            {% for friend in profile.friends.all %}
+            <div class='friend-card'>
+                <div class='friend-name'>
+                    <strong>@{{ friend.username }}</strong>
+                </div>
+                <div class='friend-bio'>
+                    {{ friend.bio }}
+                </div>
+            {% empty %}
+            {% if user == request.user %}
+            <p>You have no friends...</p>
+            {% else %}
+            <p>{{ user.username }} has no friends...</p>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <h3>Login or Register to see who's in DotWho.?</h3>
+    {% endif %}
+</main>
+{% endblock content %}

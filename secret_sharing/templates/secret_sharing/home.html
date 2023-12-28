@@ -74,20 +74,29 @@
             </div>
             <div class='secret-content'>
                 <p>
-                {{secret.content|truncatechars_html:120}}
+                {{secret.content|truncatechars_html:60}}
                 </p>
             </div>
             <div class='secret-info'>
-                <span class='created_at'>
+                {% comment %} <span class='created_at'>
                     {{secret.created_at}}
-                </span>
+                </span> {% endcomment %}
                 <span class='posted_by'>
                     {% if secret.user %}
-                    <strong>@{{secret.user.username}}</strong>
+                    <a href={% url "profile-view" pk=secret.user.id %}><strong>@{{secret.user.username}}</strong>
                     {% else %}
                     <strong>@anonymous</strong>
                     {% endif %}
                 </span>
+            </div>
+            <div class='secret-actions'>
+                <a href='/secret/{{ secret.id }}' class='button view'>Read</a>
+                {% if request.user.is_authenticated %}
+                {% if request.user == secret.user %}
+                <a href='#' class='button edit'>Edit</a>
+                <a href='#' class='button delete'>Delete</a>
+                {% endif %}
+                {% endif %}
             </div>
         </li>
         {% empty %}

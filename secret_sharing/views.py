@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Secret
 from .forms import SecretForm
@@ -10,11 +10,11 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     context = {}
     
-    ordering = request.GET.get('ordering', "")
-    secrets = Secret.objects.all()
+    # ordering = request.GET.get('ordering', "")
+    secrets = Secret.objects.all().order_by('-created_at')
     
-    if ordering:
-        secrets = secrets.order_by(ordering)
+    # if ordering:
+    #     secrets = secrets.order_by(ordering)
         
     paginator = Paginator(secrets, 3)
     page_number = request.GET.get("page")
@@ -54,3 +54,13 @@ def home(request):
                 
     return render(request, 'secret_sharing/home.html', context)
             
+
+def secret_detail(request, id):
+    context = {}
+    
+    secret = get_object_or_404(Secret, pk=id)
+    
+    context['title'] = f'{secret.title} | DotWho' if secret.title else f'Secret | DotWho'
+    context['secret'] = secret
+    
+    return render(request, 'secret_sharing/detail.html', context)

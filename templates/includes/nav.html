@@ -1,10 +1,10 @@
 <nav>
-    <a href='{% url "home" %}' class='app-logo'>
+    <a href={% url "home" %} class='app-logo'>
         <h4 class='app-name'>DotWho</h4>
     </a>
     <div class='nav-items'>
         {% if request.user.is_authenticated %}
-        <a href='{% url "home" %}'>Home</a>
+        <a href={% url "home" %}>Home</a>
         <a href='#'>Walls</a>
         <a href='#'>My Secrets</a>
         <a href='#'>Friends</a>
@@ -12,11 +12,11 @@
     </div>
     <div class='account'>
         {% if request.user.is_authenticated %}
-        <a href='#'> {{request.user.username}} </a>
-        <a href='{% url "logout" %}'> Logout </a>
+        <a href={% url "profile-view" pk=request.user.id %}> {{request.user.username}} </a>
+        <a href={% url "logout" %}> Logout </a>
         {% else %}
-        <a href='{% url "login" %}'> Login </a>
-        <a href='{% url "register" %}'> Register </a>
+        <a href={% url "login" %}> Login </a>
+        <a href={% url "register" %}> Register </a>
         {% endif %}
     </div>
 </nav>

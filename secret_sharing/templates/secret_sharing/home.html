@@ -3,8 +3,66 @@
 
 {% block content %}
 <main>
+    <button class='btn-modal open'><b>Tell a Secret</b></button>
+    <div class='modal'>
+        <div class='form-container'>
+            <button class='btn-modal close'><b>X</b></button>
+            <h4>Hmm?</h4>
+            <form method="POST" novalidate>
+                {% csrf_token %}
+                <div class="form-field">
+                    <input type="text" name="{{ form.title.name }}" placeholder="Title" maxlength="150" required>
+                    {% if form.title.errors %}
+                    <p class="error">{{ form.title.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div class="form-field">
+                    <textarea name="content" cols="40" rows="10" maxlength="280" required style="width: 142px; height: 145px;"></textarea>
+                    {% if form.content.errors %}
+                    <p class="error">{{ form.content.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div class="form-field">
+                    {% if not request.user.is_authenticated %} {% else %} <label for="is_anonymous">Don't Share Username</label> {% endif %}
+                    <input type="checkbox" name="is_anonymous" {% if not request.user.is_authenticated %} hidden
+                    {% endif %} checked>
+                </div>
+                {% comment %} {{ form.as_p }} {% endcomment %}
+                <div class='button-container'>
+                    <input type="submit" value="share" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class='utility'>
+        <select name="sort" id="sort-list" onchange="location = finalurl()">
+            <option value="" id="placeholder" disabled selected hidden>Sort</option>
+            <option id="-created_at" value="-created_at">Recent</option>
+            <option id="created_at" value="created_at">Oldest</option>
+        </select>
+    </div>
+    <script>
+        // for getting the sorting status to be displayed in sorting dropdown placeholder
+        function get(name) {
+          if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))  //location.search give query sling part
+            return decodeURIComponent(name[1]);
+        }
+      
+        if(get('ordering'))
+        document.getElementById('placeholder').innerHTML = "Sort: " + document.getElementById(get('ordering')).innerHTML
+      
+        // for getting url after applying ordering
+        function finalurl() {
+          var url = new URL(window.location.href)
+          var search_params = url.searchParams
+          search_params.set('ordering', document.getElementById("sort-list").value)
+          url.search = search_params.toString()
+          var new_url = url.toString()
+          return new_url
+        }
+    </script>
     <ul class='secrets-container'>
-        {% for secret in secrets|dictsortreversed:"created_at" %}
+        {% for secret in secrets %}
         <li class='secret-card'>
             <div class='secret-title'>
                 {% if secret.title %}
@@ -13,20 +71,29 @@
             </div>
             <div class='secret-content'>
                 <p>
-                {{secret.content|truncatechars_html:120}}
+                {{secret.content|truncatechars_html:60}}
                 </p>
             </div>
             <div class='secret-info'>
-                <span class='created_at'>
+                {% comment %} <span class='created_at'>
                     {{secret.created_at}}
-                </span>
+                </span> {% endcomment %}
                 <span class='posted_by'>
                     {% if secret.user %}
-                    <strong>@{{secret.user.username}}</strong>
+                    <a href={% url "profile-view" pk=secret.user.id %}><strong>@{{secret.user.username}}</strong>
                     {% else %}
                     <strong>@anonymous</strong>
                     {% endif %}
                 </span>
+            </div>
+            <div class='secret-actions'>
+                <a href='/secret/{{ secret.id }}' class='button view'>Read</a>
+                {% if request.user.is_authenticated %}
+                {% if request.user == secret.user %}
+                <a href='#' class='button edit'>Edit</a>
+                <a href='#' class='button delete'>Delete</a>
+                {% endif %}
+                {% endif %}
             </div>
         </li>
         {% empty %}
@@ -34,17 +101,6 @@
         {% endfor %}
     </ul>
 
-    <div class='form-container modal folder-form'>
-        <div class='form-frame'>
-            <h4>Hmm?</h4>
-            <form method="POST" novalidate>
-                {% csrf_token %}
-                {{ form.as_p }}
-                <div class='button-container'>
-                    <input type="submit" value="share" />
-                </div>
-            </form>
-        </div>
-    </div>
+    {% include "includes/pagination.html" %}
 </main>
 {% endblock content %}

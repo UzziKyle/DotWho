@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+    {% comment %} <a href='{% url "home" %}'>Go back</a> {% endcomment %}
+    <div class='secret_detail-container'>
+        <div class='secret_title-container'>
+            {% if secret.title %}
+            <h1>{{ secret.title }}</h1>
+            {% endif %}
+        </div>
+        <div class='secret_content-container'>
+            <p>{{ secret.content }}</p>
+        </div>
+        <div class='secret_author-container'>
+            {% if not secret.is_anonymous %}
+            <h3>@{{ secret.user.username }}</h3>
+            {% else %}
+            <h3>@anonymous</h3>
+            {% endif %}    
+        </div>
+    </div>
+    <div class="container mt-4">
+        {% load comment_tags %}
+        {% render_comments secret request %}
+        {% include_bootstrap %}
+    </div>
+</main>
+{% endblock content %}

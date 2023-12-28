@@ -12,8 +12,8 @@
                 {% csrf_token %}
                 <div class="form-field">
                     <input type="text" name="{{ form.title.name }}" placeholder="Title" maxlength="150" required>
-                    {% if form.username.errors %}
-                    <p class="error">{{ form.username.errors.0 }}</p>
+                    {% if form.title.errors %}
+                    <p class="error">{{ form.title.errors.0 }}</p>
                     {% endif %}
                 </div>
                 <div class="form-field">
@@ -26,9 +26,6 @@
                     {% if not request.user.is_authenticated %} {% else %} <label for="is_anonymous">Hide Identity</label> {% endif %}
                     <input type="checkbox" name="is_anonymous" {% if not request.user.is_authenticated %} hidden
                     {% endif %} checked>
-                    {% if form.username.errors %}
-                    <p class="error">{{ form.username.errors.0 }}</p>
-                    {% endif %}
                 </div>
                 {% comment %} {{ form.as_p }} {% endcomment %}
                 <div class='button-container'>
@@ -37,13 +34,13 @@
             </form>
         </div>
     </div>
-    {% comment %} <div class='utility'>
+    <div class='utility'>
         <select name="sort" id="sort-list" onchange="location = finalurl()">
             <option value="" id="placeholder" disabled selected hidden>Sort</option>
             <option id="-created_at" value="-created_at">Recent</option>
             <option id="created_at" value="created_at">Oldest</option>
         </select>
-    </div> {% endcomment %}
+    </div>
     <script>
         // for getting the sorting status to be displayed in sorting dropdown placeholder
         function get(name) {
@@ -65,7 +62,7 @@
         }
     </script>
     <ul class='secrets-container'>
-        {% for secret in secrets|dictsortreversed:"created_at" %}
+        {% for secret in secrets %}
         <li class='secret-card'>
             <div class='secret-title'>
                 {% if secret.title %}

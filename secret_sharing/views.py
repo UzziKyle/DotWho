@@ -10,11 +10,13 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     context = {}
     
-    # ordering = request.GET.get('ordering', "")
-    secrets = Secret.objects.all().order_by('-created_at')
+    ordering = request.GET.get('ordering', "")
+    secrets = Secret.objects.all()
     
-    # if ordering:
-    #     secrets = secrets.order_by(ordering)
+    if ordering:
+        secrets = secrets.order_by(ordering)
+        
+    print(secrets)
         
     paginator = Paginator(secrets, 3)
     page_number = request.GET.get("page")
@@ -31,6 +33,7 @@ def home(request):
     context['title'] = 'Home | DotWho'
     context['paginator'] = paginator
     context['page_obj'] = page_obj
+    context['ordering'] = ordering
     context['secrets'] = page_obj.object_list
     context['form'] = SecretForm()
     

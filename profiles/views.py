@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from .models import Profile, FriendRequest
@@ -165,3 +166,46 @@ def remove_friend(request, pk):
     sender_profile.friends.remove(receiver)
     
     return redirect('profile-view', pk=pk)
+
+
+@login_required
+def view_friends(request):
+    context = {}
+    
+    user = request.user
+    profile = user.profile if hasattr(user, 'profile') else None
+    
+    friends = profile.friends.all()
+    
+    paginator = Paginator(friends, 3)
+    page_number = request.GET.get("page")
+    
+    try:
+        page_obj = paginator.get_page(page_number)
+        
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+        
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    
+    friend_requests_received = FriendRequest.objects.filter(receiver=user).order_by('-created_at')[:5]  # Retrieves the five latest friend requests received
+    friend_requests_received = friend_requests_received.values_list('sender', flat=True)  # Gets the senders ids
+    friend_requests_received = User.objects.filter(pk__in=set(friend_requests_received))    
+    
+    friend_requests_sent = FriendRequest.objects.filter(sender=user).order_by('-created_at')[:5]  # Retrieves the five latest friend requests sent
+    friend_requests_sent = friend_requests_sent.values_list('receiver', flat=True)  # Gets the receivers ids
+    friend_requests_sent = User.objects.filter(pk__in=set(friend_requests_sent))
+    
+    context['title'] = f'Friends | DotWho'
+    context['paginator'] = paginator
+    context['page_obj'] = page_obj
+    context['friends'] = page_obj.object_list
+    context['friend_requests_received'] = friend_requests_received
+    context['friend_requests_sent'] = friend_requests_sent
+    
+    print(friend_requests_sent)
+    print(friend_requests_received)
+    
+    return render(request, 'profiles/friends.html', context)
+    

@@ -3,7 +3,7 @@
     <ul class="pagination">
         {% if page_obj.number > 1 %}
             <li class="page-item">
-                <a class="page-link" href="?page=1">First</a>
+                <a class="page-link" href="?page=1{% if ordering %}&ordering={{ordering}}{% endif %}">First</a>
             </li>
         {% else %}
             <li class="page-item disabled">
@@ -13,7 +13,7 @@
 
         {% if page_obj.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number}}">Previous</a>
+                <a class="page-link" href="?page={{ page_obj.previous_page_number}}{% if ordering %}&ordering={{ordering}}{% endif %}">Previous</a>
             </li>
         {% else %}
             <li class="page-item disabled">
@@ -31,7 +31,7 @@
                 </li>
             {% elif page_num > page_obj.number|add:'-2' and page_num < page_obj.number|add:'2' %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                    <a class="page-link" href="?page={{ page_num }}{% if ordering %}&ordering={{ordering}}{% endif %}">{{ page_num }}</a>
                 </li>
             {% endif %}
         {% endfor %}
@@ -48,7 +48,7 @@
 
         {% if page_obj.number != paginator.num_pages %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ paginator.num_pages }}">Last</a>
+                <a class="page-link" href="?page={{ paginator.num_pages }}{% if ordering %}&ordering={{ordering}}{% endif %}">Last</a>
             </li>
         {% else %}
             <li class="page-item disabled">

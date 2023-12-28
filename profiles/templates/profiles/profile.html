@@ -26,24 +26,27 @@
             <a id='remove-friend' href={% url "remove-friend" pk=user.id %}>Remove Friend</a>
             {% endif %}
         </div>
-        <div class='friends-container'>
+        <ul class='friends-container'>
             <h3>Friends</h3>
             {% for friend in profile.friends.all %}
-            <div class='friend-card'>
-                <div class='friend-name'>
-                    <strong>@{{ friend.username }}</strong>
-                </div>
-                <div class='friend-bio'>
-                    {{ friend.bio }}
-                </div>
+            <a href={% url "profile-view" pk=friend.id %}>
+                <li class='friend-card'>
+                    <div class='friend-name'>
+                        <strong>@{{ friend.username }}</strong>
+                    </div>
+                    <div class='friend-bio'>
+                        {{ friend.bio }}
+                    </div>
+                </li>
+            </a>
             {% empty %}
             {% if user == request.user %}
-            <p>You have no friends...</p>
+            <li>You have no friends...</li>
             {% else %}
-            <p>{{ user.username }} has no friends...</p>
+            <li>{{ user.username }} has no friends...</li>
             {% endif %}
             {% endfor %}
-        </div>
+        </ul>
     </div>
     {% else %}
     <h3>Login or Register to see who's in DotWho.?</h3>

@@ -2,6 +2,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from .models import Profile, FriendRequest
+from secret_sharing.models import Secret, Vote
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, RegistrationForm, ProfileForm
@@ -11,11 +12,14 @@ from .forms import LoginForm, RegistrationForm, ProfileForm
 def sign_in(request):
     context = {}
     
+    next_action = request.GET.get('next', "")
+    
     if request.method == 'GET':
         if request.user.is_authenticated:
             return redirect('home')
         
         context['form'] = LoginForm()
+        context['next_action'] = next_action
             
     elif request.method == 'POST':
         form = LoginForm(request.POST)
@@ -27,6 +31,10 @@ def sign_in(request):
             
             if user:
                 login(request, user)
+                
+                if next_action:
+                    return redirect(next_action)
+                
                 return redirect('home')
             
         context['form'] = form
@@ -78,12 +86,27 @@ def view_profile(request, pk):
     except:
         is_requested_by = False
         
+    authored_secrets = Secret.objects.filter(user=user).order_by('-created_at')[:3]
+    
+    liked_secrets = Vote.objects.filter(user=user).order_by('-created_at')[:3]
+    liked_secrets = liked_secrets.values_list('secret', flat=True)
+    liked_secrets = Secret.objects.filter(pk__in=set(liked_secrets))
+    
+    try:
+        friends = profile.friends.all()[:3]
+    
+    except:
+        friends = None
+        
     context['title'] = f'{user.username} | DotWho'
     context['user'] = user
     context['profile'] = profile
     context['is_a_friend'] = is_a_friend
     context['has_requested_to'] = has_requested_to
     context['is_requested_by'] = is_requested_by
+    context['friends'] = friends
+    context['authored_secrets'] = authored_secrets
+    context['liked_secrets'] = liked_secrets
 
     return render(request, 'profiles/profile.html', context)
 

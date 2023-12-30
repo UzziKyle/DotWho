@@ -5,7 +5,7 @@
     {% if request.user.is_authenticated %}
     <div class="profile">
         <div class="info-container">
-            <h2>{{user.username | title }}</h2>
+            <h2>{{user.username}}</h2>
             {% if profile.bio %}
             <div class="bio">
                 <p>{{ profile.bio }}</p>
@@ -28,7 +28,7 @@
         </div>
         <ul class='friends-container'>
             <h3>Friends</h3>
-            {% for friend in profile.friends.all %}
+            {% for friend in friends %}
             <a href={% url "profile-view" pk=friend.id %}>
                 <li class='friend-card'>
                     <div class='friend-name'>
@@ -45,6 +45,90 @@
             {% else %}
             <li>{{ user.username }} has no friends...</li>
             {% endif %}
+            {% endfor %}
+        </ul>
+        <ul class='authored_secrets-container'>
+            {% if user == request.user %}
+            <h3>Your Latest Secrets</h3>
+            {% else %}
+            <h3>{{ user.username }}'s Secrets</h3>
+            {% endif %}
+            {% for secret in authored_secrets %}
+            <li class='secret-card'>
+                <div class='secret-title'>
+                    {% if secret.title %}
+                    {{secret.title}}
+                    {% endif %}
+                </div>
+                <div class='secret-content'>
+                    <p>
+                    {{secret.content|truncatechars_html:60}}
+                    </p>
+                </div>
+                <div class='secret-info'>
+                    {% comment %} <span class='created_at'>
+                        {{secret.created_at}}
+                    </span> {% endcomment %}
+                    <span class='posted_by'>
+                        <strong>@{{secret.user.username}}</strong>
+                    </span>
+                </div>
+                <div class='secret-actions'>
+                    <a href={% url "secret_detail" pk=secret.pk %} class='button view'>Read</a>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user == secret.user %}
+                        <a href='#' class='button edit'>Edit</a>
+                        <a href='#' class='button delete'>Delete</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </li>
+            {% empty %}
+            <li>No secrets found...</li>
+            {% endfor %}
+        </ul>
+        <ul class='liked_secrets-container'>
+            <h3>Recently Liked</h3>
+            {% for secret in liked_secrets %}
+            <li class='secret-card'>
+                <div class='secret-title'>
+                    {% if secret.title %}
+                    {{secret.title}}
+                    {% endif %}
+                </div>
+                <div class='secret-content'>
+                    <p>
+                    {{secret.content|truncatechars_html:60}}
+                    </p>
+                </div>
+                <div class='secret-info'>
+                    {% comment %} <span class='created_at'>
+                        {{secret.created_at}}
+                    </span> {% endcomment %}
+                    <span class='posted_by'>
+                        {% if secret.user %}
+                            {% if secret.user == user %}
+                            <strong>@{{secret.user.username}}</strong>
+                            {% else %}
+                            <a href={% url "profile-view" pk=secret.user.id %}><strong>@{{secret.user.username}}</strong></a>
+                            {% endif %}
+                        {% else %}
+                        <strong>@anonymous</strong>
+                        {% endif %}
+                    </span>
+                </div>
+                <div class='secret-actions'>
+                    <a href={% url "secret_detail" pk=secret.pk %} class='button view'>Read</a>
+                    {% if request.user.is_authenticated %}
+                        {% if request.user == secret.user %}
+                        <a href='#' class='button edit'>Edit</a>
+                        <a href='#' class='button delete'>Delete</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </li>
+            {% empty %}
+            <li>Doesn't like anything...</li>
             {% endfor %}
         </ul>
     </div>

@@ -1,12 +1,14 @@
+{% load static %}
 <nav>
     <a href={% url "home" %} class='app-logo'>
+        <img src={% static "img/dotwho-logo.png" %} alt="DotWho logo">
         <h4 class='app-name'>DotWho</h4>
     </a>
     <div class='nav-items'>
         {% if request.user.is_authenticated %}
         <a href={% url "home" %}>Home</a>
-        <a href='#'>Walls</a>
-        <a href='#'>My Secrets</a>
+        {% comment %} <a href='#'>Walls</a>
+        <a href='#'>My Secrets</a> {% endcomment %}
         <a href={% url "view-friends" %}>Friends</a>
         {% endif %}
     </div>

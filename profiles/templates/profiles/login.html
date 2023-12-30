@@ -2,7 +2,7 @@
 
 {% block content %}
 <main>
-  <form method="post" action="{% url 'login' %}">
+  <form method="post" action="{% url 'login' %}?next={{ next_action }}">
     {% csrf_token %}
     <h2>Log in</h2>
 
@@ -20,7 +20,7 @@
     </div>
 
     <input id="button" type="submit" value="Log In"/>
-    <p id="register">Don't have an account? <a id="reg-link" href="#" alt="photo">Register here</a></p>
+    <p id="register">Don't have an account? <a id="reg-link" href={% url "register" %} alt="photo">Register here</a></p>
   </form>
 </main>
 {% endblock content %}

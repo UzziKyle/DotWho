@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Secret
+from .models import Secret, Vote
 from .forms import SecretForm
 from django.contrib.auth.decorators import login_required
 
@@ -17,7 +17,7 @@ def home(request):
         secrets = secrets.order_by(ordering)
         
     else:
-        secrets = secrets.order_by('-created_at')
+        secrets = secrets.order_by('-upvote_count')
                 
     paginator = Paginator(secrets, 3)
     page_number = request.GET.get("page")
@@ -59,12 +59,43 @@ def home(request):
     return render(request, 'secret_sharing/home.html', context)
             
 
-def secret_detail(request, id):
+def secret_detail(request, pk):
     context = {}
     
-    secret = get_object_or_404(Secret, pk=id)
+    secret = get_object_or_404(Secret, pk=pk)
+    user = request.user
+    
+    try:
+        is_already_voted = Vote.objects.filter(secret=secret, user=user).exists()
+    
+    except:
+        is_already_voted = False
     
     context['title'] = f'{secret.title} | DotWho' if secret.title else f'Secret | DotWho'
     context['secret'] = secret
+    context['is_already_voted'] = is_already_voted
     
     return render(request, 'secret_sharing/detail.html', context)
+
+
+@login_required
+def upvote(request, pk):
+    secret = get_object_or_404(Secret, pk=pk)
+    user = request.user
+    
+    is_already_voted = Vote.objects.filter(secret=secret, user=user).exists()
+    
+    if not is_already_voted:
+        Vote.objects.create(secret=secret, user=user)
+        
+        secret.upvote_count += 1
+        secret.save()
+        
+    else:
+        vote = Vote.objects.get(secret=secret, user=user)
+        vote.delete()
+        
+        secret.upvote_count -= 1
+        secret.save()
+        
+    return redirect('secret_detail', pk=secret.pk)

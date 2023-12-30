@@ -20,6 +20,14 @@
             {% endif %}    
         </div>
     </div>
+    <div class='secret_actions-container'>
+        <p>Upvotes: {{ secret.upvote_count }}</p>
+        {% if not is_already_voted %}
+        <a href={% url 'upvote' secret.id %}>Upvote</a>
+        {% else %}
+        <a href={% url 'upvote' secret.id %}>Remove Vote</a>
+        {% endif %}
+    </div>
     <div class="container mt-4">
         {% load comment_tags %}
         {% render_comments secret request %}

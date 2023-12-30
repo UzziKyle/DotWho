@@ -23,7 +23,7 @@
                     {% endif %}
                 </div>
                 <div class="form-field">
-                    {% if not request.user.is_authenticated %} {% else %} <label for="is_anonymous">Don't Share Username</label> {% endif %}
+                    {% if not request.user.is_authenticated %} {% else %} <label for="is_anonymous">Anonymous</label> {% endif %}
                     <input type="checkbox" name="is_anonymous" {% if not request.user.is_authenticated %} hidden
                     {% endif %} checked>
                 </div>
@@ -37,8 +37,10 @@
     <div class='utility'>
         <select name="sort" id="sort-list" onchange="location = finalurl()">
             <option value="" id="placeholder" disabled selected hidden>Sort</option>
-            <option id="-created_at" value="-created_at">Recent</option>
+            <option id="-created_at" value="-created_at">Latest</option>
             <option id="created_at" value="created_at">Oldest</option>
+            <option id="-upvote_count" value="-upvote_count">Popular</option>
+            <option id="upvote_count" value="upvote_count">Unpopular</option>
         </select>
     </div>
     <script>
@@ -87,7 +89,7 @@
                 </span>
             </div>
             <div class='secret-actions'>
-                <a href='/secret/{{ secret.id }}' class='button view'>Read</a>
+                <a href={% url "secret_detail" pk=secret.pk %} class='button view'>Read</a>
                 {% if request.user.is_authenticated %}
                 {% if request.user == secret.user %}
                 <a href='#' class='button edit'>Edit</a>

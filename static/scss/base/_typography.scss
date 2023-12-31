@@ -1,3 +1,5 @@
+@use '../abstracts/mixins' as m;
+
 :root {
   --font-primary: 'Lato', sans-serif;
   --font-secondary: 'Arvo', serif;
@@ -20,21 +22,21 @@
   --body-line-height: 1.4;
 }
 
-@include respond-to(medium) {
+@include m.respond-to(medium) {
   :root {
       --text-base-size: 1.1em;
       --text-scale-ratio: 1.2;
   }
 }
 
-@include respond-to(large) {
+@include m.respond-to(large) {
   :root {
       --text-base-size: 1.1em;
       --text-scale-ratio: 1.25;
   }
 }
 
-@include respond-to(huge) {
+@include m.respond-to(huge) {
   :root {
       --text-base-size: 1.15em;
       --text-scale-ratio: 1.25;
@@ -51,6 +53,15 @@ h1, h2, h3, h4, form legend {
   color: var(--color-text-heading);
   margin-bottom: var(--space-xxs);
   line-height: var(--heading-line-height);
+}
+
+h1, h2, h3, 
+.text--xxxl, 
+.text--xxl, 
+.txt--xl, 
+.txt--lg {
+  font-family: var(--font-secondary);
+  font-weight: 700;
 }
 
 /* text size */
@@ -86,9 +97,12 @@ p {
   line-height: var(--body-line-height);
 }
 
+a, a:visited, a:active {
+  text-decoration: none;
+}
+
 a {
   color: var(--color-link);
-  // text-decoration: none;
 
   &:visited {
       color: var(--color-link-visited);
@@ -140,9 +154,4 @@ ol {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.logo__name {
-  font-family: var(--font-secondary);
-  font-weight: bold;
 }

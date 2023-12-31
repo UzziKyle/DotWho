@@ -1,9 +1,5 @@
-@import 'abstracts/variables';
-@import 'abstracts/functions';
-@import 'abstracts/mixins';
-@import 'abstracts/placeholders';
+@charset "UTF-8";
 
-// @import 'vendors/bootstrap';
-
-@import 'base/reset';
-@import 'base/typography';
+@forward 'abstracts';
+// @forward 'vendors';
+@forward 'base';

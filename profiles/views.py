@@ -86,7 +86,7 @@ def view_profile(request, pk):
     except:
         is_requested_by = False
         
-    authored_secrets = Secret.objects.filter(user=user).order_by('-created_at')[:3]
+    authored_secrets = Secret.objects.filter(author=user).order_by('-created_at')[:3]
     
     liked_secrets = Vote.objects.filter(user=user).order_by('-created_at')[:3]
     liked_secrets = liked_secrets.values_list('secret', flat=True)
@@ -226,9 +226,6 @@ def view_friends(request):
     context['friends'] = page_obj.object_list
     context['friend_requests_received'] = friend_requests_received
     context['friend_requests_sent'] = friend_requests_sent
-    
-    print(friend_requests_sent)
-    print(friend_requests_received)
     
     return render(request, 'profiles/friends.html', context)
     

@@ -81,8 +81,8 @@
                     {{secret.created_at}}
                 </span> {% endcomment %}
                 <span class='posted_by'>
-                    {% if secret.user %}
-                    <a href={% url "profile-view" pk=secret.user.id %}><strong>@{{secret.user.username}}</strong>
+                    {% if secret.author %}
+                    <a href={% url "profile-view" pk=secret.author.id %}><strong>@{{secret.author.username}}</strong>
                     {% else %}
                     <strong>@anonymous</strong>
                     {% endif %}
@@ -91,7 +91,7 @@
             <div class='secret-actions'>
                 <a href={% url "secret-view" pk=secret.pk %} class='button view'>Read</a>
                 {% if request.user.is_authenticated %}
-                {% if request.user == secret.user %}
+                {% if request.user == secret.author %}
                 <a href='#' class='button edit'>Edit</a>
                 <a href='#' class='button delete'>Delete</a>
                 {% endif %}

@@ -44,12 +44,13 @@ def home(request):
         if form.is_valid():
             secret = form.save(commit=False)
             is_anonymous = request.POST.get('is_anonymous', None)
+            
             if is_anonymous:
                 secret.author = None
                 
             else:
                 secret.author = request.user
-                
+                                
             secret.save()
             return redirect('home')
         
@@ -75,7 +76,7 @@ def view_secret(request, pk):
     context['secret'] = secret
     context['is_already_voted'] = is_already_voted
     
-    return render(request, 'secret_sharing/detail.html', context)
+    return render(request, 'secret_sharing/secret.html', context)
 
 
 @login_required
@@ -126,4 +127,4 @@ def upvote(request, pk):
         secret.upvote_count -= 1
         secret.save()
         
-    return redirect('secret_detail', pk=secret.pk)
+    return redirect('secret-view', pk=secret.pk)

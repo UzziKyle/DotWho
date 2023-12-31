@@ -45,10 +45,10 @@ def home(request):
             secret = form.save(commit=False)
             is_anonymous = request.POST.get('is_anonymous', None)
             if is_anonymous:
-                secret.user = None
+                secret.author = None
                 
             else:
-                secret.user = request.user
+                secret.author = request.user
                 
             secret.save()
             return redirect('home')

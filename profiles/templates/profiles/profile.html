@@ -70,13 +70,13 @@
                         {{secret.created_at}}
                     </span> {% endcomment %}
                     <span class='posted_by'>
-                        <strong>@{{secret.user.username}}</strong>
+                        <strong>@{{secret.author.username}}</strong>
                     </span>
                 </div>
                 <div class='secret-actions'>
                     <a href={% url "secret-view" pk=secret.pk %} class='button view'>Read</a>
                     {% if request.user.is_authenticated %}
-                        {% if request.user == secret.user %}
+                        {% if request.user == secret.author %}
                         <a href='#' class='button edit'>Edit</a>
                         <a href='#' class='button delete'>Delete</a>
                         {% endif %}
@@ -106,11 +106,11 @@
                         {{secret.created_at}}
                     </span> {% endcomment %}
                     <span class='posted_by'>
-                        {% if secret.user %}
-                            {% if secret.user == user %}
-                            <strong>@{{secret.user.username}}</strong>
+                        {% if secret.author %}
+                            {% if secret.author == user %}
+                            <strong>@{{secret.author.username}}</strong>
                             {% else %}
-                            <a href={% url "profile-view" pk=secret.user.id %}><strong>@{{secret.user.username}}</strong></a>
+                            <a href={% url "profile-view" pk=secret.author.id %}><strong>@{{secret.author.username}}</strong></a>
                             {% endif %}
                         {% else %}
                         <strong>@anonymous</strong>
@@ -120,7 +120,7 @@
                 <div class='secret-actions'>
                     <a href={% url "secret-view" pk=secret.pk %} class='button view'>Read</a>
                     {% if request.user.is_authenticated %}
-                        {% if request.user == secret.user %}
+                        {% if request.user == secret.author %}
                         <a href='#' class='button edit'>Edit</a>
                         <a href='#' class='button delete'>Delete</a>
                         {% endif %}

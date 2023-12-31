@@ -59,7 +59,7 @@ def home(request):
     return render(request, 'secret_sharing/home.html', context)
             
 
-def secret_detail(request, pk):
+def view_secret(request, pk):
     context = {}
     
     secret = get_object_or_404(Secret, pk=pk)
@@ -77,6 +77,34 @@ def secret_detail(request, pk):
     
     return render(request, 'secret_sharing/detail.html', context)
 
+
+@login_required
+def edit_secret(request, pk):
+    context = {}
+    
+    secret = get_object_or_404(Secret, pk=pk)
+    
+    if secret.author != request.user:
+        return redirect('home')
+    
+    context['title'] = f'{secret.title} | DotWho' if secret.title else f'Secret | DotWho'
+    
+    if request.method == 'GET':
+        context['form'] = SecretForm(instance=secret)
+
+    elif request.method == 'POST':
+        form = SecretForm(request.POST, instance=secret)
+        
+        if form.is_valid():
+            form.save()
+            
+            return redirect('secret-view', pk=pk)
+        
+        else:
+            context['form'] = form   
+            
+    return render(request, 'secret_sharing/edit_secret.html', context)
+    
 
 @login_required
 def upvote(request, pk):

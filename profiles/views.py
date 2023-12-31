@@ -114,6 +114,7 @@ def view_profile(request, pk):
 @login_required   
 def edit_profile(request, pk):
     context = {}
+    
     user = get_object_or_404(User, pk=pk)
     profile = user.profile if hasattr(user, 'profile') else None
     
@@ -121,7 +122,6 @@ def edit_profile(request, pk):
     
     if request.method == 'GET':
         context['form'] = ProfileForm(instance=profile)
-        context['profile'] = profile
     
     elif request.method == 'POST':
         form = ProfileForm(request.POST, instance=profile)

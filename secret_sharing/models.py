@@ -17,7 +17,7 @@ class Secret(BaseModel):
     title = models.CharField(max_length=60, blank=True, null=False)
     content = models.TextField(max_length=280, blank=False, null=False)
     is_anonymous = models.BooleanField(default=True)
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='secret')
+    author = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='secret')
     upvote_count = models.IntegerField(default=0)
     comments = GenericRelation(Comment)
     
@@ -26,13 +26,13 @@ class Secret(BaseModel):
             if self.is_anonymous:
                 return f'{self.id} | {self.title} | @anonymous'
             
-            return f'{self.id} | {self.title} | @{self.user.username}'
+            return f'{self.id} | {self.title} | @{self.author.username}'
         
         else:
             if self.is_anonymous:
                 return f'{self.id} | no title | @anonymous'
             
-            return f'{self.id} | no title | @{self.user.username}'
+            return f'{self.id} | no title | @{self.author.username}'
     
     
 class Vote(BaseModel):

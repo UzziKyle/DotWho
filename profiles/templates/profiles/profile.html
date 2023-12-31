@@ -74,7 +74,7 @@
                     </span>
                 </div>
                 <div class='secret-actions'>
-                    <a href={% url "secret_detail" pk=secret.pk %} class='button view'>Read</a>
+                    <a href={% url "secret-view" pk=secret.pk %} class='button view'>Read</a>
                     {% if request.user.is_authenticated %}
                         {% if request.user == secret.user %}
                         <a href='#' class='button edit'>Edit</a>
@@ -118,7 +118,7 @@
                     </span>
                 </div>
                 <div class='secret-actions'>
-                    <a href={% url "secret_detail" pk=secret.pk %} class='button view'>Read</a>
+                    <a href={% url "secret-view" pk=secret.pk %} class='button view'>Read</a>
                     {% if request.user.is_authenticated %}
                         {% if request.user == secret.user %}
                         <a href='#' class='button edit'>Edit</a>

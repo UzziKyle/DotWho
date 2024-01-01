@@ -1,0 +1,102 @@
+@use '../abstracts/mixins' as m;
+
+.header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: var(--color-background-secondary);
+  padding-block: var(--text-base-size);
+  // for debugging purposes
+  // outline: 2px solid limegreen;
+
+  // *, *::before, *::after {
+  //     outline: auto;
+  // }
+
+  @include m.respond-to('medium') {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+  }
+
+  @include m.respond-to('large') {
+    grid-template-columns: 1fr 2fr;
+    gap: min(50%, 5em);
+    padding-inline: var(--text-base-size);
+  }
+
+  .logo {
+    &__anchor {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      grid-template-rows: auto;
+      gap: var(--text-base-size);
+
+      @include m.respond-to('large') {
+        margin-left: var(--text-base-size);
+      }
+    }
+
+    &__img {
+      justify-self: right;
+      align-self: center;
+      height: 80px;
+
+      @include m.respond-to('large') {
+        height: 75px;
+      }
+    }
+
+    &__name {
+      color: var(--color-text-secondary);
+      justify-self: left;
+      align-self: end;
+      margin-bottom: 0.35em;
+
+      @include m.respond-to('large') {
+        align-self: center;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .nav { 
+    margin-top: var(--text-base-size);
+    padding-inline: var(--text-base-size);
+
+    @include m.respond-to('medium') {
+      margin-top: 0;
+      padding-inline: 0;
+    }
+
+    @include m.respond-to('large') {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+    }
+
+    a {
+      display: block;
+    }
+
+    &__list {
+      display: flex;
+      justify-content: center;
+      gap: var(--text-base-size);
+      padding: 0;
+
+      @include m.respond-to('medium') {
+        justify-content: space-around;
+        gap: 0;
+      }
+    }
+
+    &__item {
+      display: inline-block;
+      padding: 0.5em;
+      width: 4.5em;
+      text-align: center;
+    }
+  }
+}

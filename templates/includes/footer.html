@@ -1,20 +1,13 @@
-<footer>
-    <div class="">
-        <p>
-            <strong>DotWho</strong> <br/>
-            &copy; 2023 Uzzi. All Rights Reserved.
-        </p>
-    </div>
-    <div class="social-icons">
-        <a href="https://github.com/uzzikyle" target="_blank" class="icon-link">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/uzzielkyle/" target="_blank" class="icon-link">
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="https://instagram.com/uzzikyle" target="_blank" class="icon-link">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <!-- Add other social media icons similarly -->
-      </div>
+{% load static %}
+<footer class='footer'>
+  <div class='logo'>
+    <a href={% url "home" %} class='logo__anchor'>
+      <img src={% static "img/dotwho-logo.png" %} alt="DotWho logo" class='logo__img'>
+      <span class='logo__name'>DotWho</span>
+    </a>
+  </div>
+  <p class='footer__author'>
+    <span>2024 &copy; <a href="https://github.com/uzzikyle" target="_blank"><strong>UZZI</strong></a></span>
+    <span>All Rights Reserved.</span>
+  </p>
 </footer>

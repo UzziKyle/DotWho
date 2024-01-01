@@ -7,12 +7,12 @@
         </a>
     </div>
     <nav class='nav'>
-        {% if request.user.is_authenticated %}
         <ul class='nav__list'>
+            {% if request.user.is_authenticated %}
             <a href={% url "home" %}><li class='nav__item text--md'>Home</li></a>
             <a href={% url "view-friends" %}><li class='nav__item text--md'>Friends</li></a>
+            {% endif %}
         </ul>
-        {% endif %}
         <ul class='nav__list'>
             {% if request.user.is_authenticated %}
             <a href={% url "profile-view" pk=request.user.id %}><li class='nav__item text--md truncate'><strong> {{request.user.username | upper}} </strong></li></a>

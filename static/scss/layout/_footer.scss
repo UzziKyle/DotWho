@@ -6,7 +6,8 @@
   padding-block: var(--text-base-size);
 
   @include m.respond-to('large'){
-    padding-block: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
+    padding-block: 0;
+    padding-top: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio) * var(--text-scale-ratio));
   }
 
   .logo {
@@ -50,7 +51,8 @@
   &__author {
     display: flex;
     flex-direction: column;
-    margin-top: 1em;
+    margin-block: 0;
+    padding-block: 1em;
     text-align: center;
   }
 }

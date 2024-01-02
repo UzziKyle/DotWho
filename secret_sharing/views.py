@@ -104,7 +104,28 @@ def edit_secret(request, pk):
         else:
             context['form'] = form   
             
-    return render(request, 'secret_sharing/edit_secret.html', context)
+    return render(request, 'secret_sharing/secret_edit.html', context)
+
+
+@login_required
+def delete_secret(request, pk):
+    context = {}
+    
+    secret = get_object_or_404(Secret, pk=pk)
+    
+    if secret.author != request.user:
+        return redirect('home')
+    
+    context['title'] = f'{secret.title} | DotWho' if secret.title else f'Secret | DotWho'
+    context['secret'] = secret
+    
+    if request.method == 'POST':
+        user = secret.author
+        secret.delete()
+        
+        return redirect('profile-view', pk=user.pk)
+    
+    return render(request, 'secret_sharing/secret_delete.html', context)        
     
 
 @login_required

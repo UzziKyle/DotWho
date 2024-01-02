@@ -4,13 +4,14 @@
 {% block content %}
 <main>
     <button class='btn-modal open'><b>Tell a Secret</b></button>
-    <div class='modal'>
+    <div class=''>
         <div class='form-container'>
             <button class='btn-modal close'><b>X</b></button>
-            <h4>Hmm?</h4>
+            <h3>Hmm?</h3>
             <form method="POST" novalidate>
                 {% csrf_token %}
-                <div class="form-field">
+                {% include "includes/secret_form.html" %}
+                {% comment %} <div class="form-field">
                     <input type="text" name="{{ form.title.name }}" placeholder="Title" maxlength="150" required>
                     {% if form.title.errors %}
                     <p class="error">{{ form.title.errors.0 }}</p>
@@ -26,7 +27,7 @@
                     {% if not request.user.is_authenticated %} {% else %} <label for="is_anonymous">Anonymous</label> {% endif %}
                     <input type="checkbox" name="is_anonymous" {% if not request.user.is_authenticated %} hidden
                     {% endif %} checked>
-                </div>
+                </div> {% endcomment %}
                 {% comment %} {{ form.as_p }} {% endcomment %}
                 <div class='button-container'>
                     <input type="submit" value="share" />
@@ -94,8 +95,8 @@
                 <a href={% url "secret-view" pk=secret.pk %} class=''>Read</a>
                 {% if request.user.is_authenticated %}
                 {% if request.user == secret.author %}
-                <a href='#' class=''>Edit</a>
-                <a href='#' class=''>Delete</a>
+                <a href={% url "secret-edit" pk=secret.pk%} class=''>Edit</a>
+                <a href={% url "secret-delete" pk=secret.pk%} class=''>Delete</a>
                 {% endif %}
                 {% endif %}
             </div>

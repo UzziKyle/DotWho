@@ -81,8 +81,8 @@
                     <a href={% url "secret-view" pk=secret.pk %} class=''>Read</a>
                     {% if request.user.is_authenticated %}
                         {% if request.user == secret.author %}
-                        <a href='#' class=''>Edit</a>
-                        <a href='#' class=''>Delete</a>
+                        <a href={% url "secret-edit" pk=secret.pk%} class=''>Edit</a>
+                        <a href={% url "secret-delete" pk=secret.pk%} class=''>Delete</a>
                         {% endif %}
                     {% endif %}
                 </div>
@@ -127,8 +127,8 @@
                     <a href={% url "secret-view" pk=secret.pk %} class='text--sm'>Read</a>
                     {% if request.user.is_authenticated %}
                         {% if request.user == secret.author %}
-                        <a href='#' class='text--sm'>Edit</a>
-                        <a href='#' class='text--sm'>Delete</a>
+                        <a href={% url "secret-edit" pk=secret.pk%} class='text--sm'>Edit</a>
+                        <a href={% url "secret-delete" pk=secret.pk%} class='text--sm'>Delete</a>
                         {% endif %}
                     {% endif %}
                 </div>

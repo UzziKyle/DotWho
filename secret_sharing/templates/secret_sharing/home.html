@@ -63,37 +63,39 @@
           return new_url
         }
     </script>
-    <ul class='secrets-container'>
+    <ul class='card-container'>
         {% for secret in secrets %}
-        <li class='secret-card'>
-            <div class='secret-title'>
+        <li class='card secret'>
+            <div class='secret__title'>
+                <span><b>
                 {% if secret.title %}
                 {{secret.title}}
                 {% endif %}
+                </b></span>
             </div>
-            <div class='secret-content'>
+            <div class='secret__content text--sm'>
                 <p>
                 {{secret.content|truncatechars_html:60}}
                 </p>
             </div>
-            <div class='secret-info'>
+            <div class='secret__info'>
                 {% comment %} <span class='created_at'>
                     {{secret.created_at}}
                 </span> {% endcomment %}
                 <span class='posted_by'>
                     {% if secret.author %}
-                    <a href={% url "profile-view" pk=secret.author.id %}><strong>@{{secret.author.username}}</strong>
+                    <a href={% url "profile-view" pk=secret.author.id %}><strong>@{{secret.author.username}}</strong></a>
                     {% else %}
                     <strong>@anonymous</strong>
                     {% endif %}
                 </span>
             </div>
-            <div class='secret-actions'>
-                <a href={% url "secret-view" pk=secret.pk %} class='button view'>Read</a>
+            <div class='secret__actions'>
+                <a href={% url "secret-view" pk=secret.pk %} class=''>Read</a>
                 {% if request.user.is_authenticated %}
                 {% if request.user == secret.author %}
-                <a href='#' class='button edit'>Edit</a>
-                <a href='#' class='button delete'>Delete</a>
+                <a href='#' class=''>Edit</a>
+                <a href='#' class=''>Delete</a>
                 {% endif %}
                 {% endif %}
             </div>

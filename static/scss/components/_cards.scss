@@ -1,0 +1,62 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  // width: min(100%, 230px);
+  // height: min(250px, auto);
+  text-align: center;
+  border: 2px solid var(--color-background-secondary);
+  border-radius: calc(var(--text-base-size)*0.75);
+  box-shadow: 0 0 8px var(--color-background-secondary);
+  padding: calc(var(--text-base-size));
+  
+  // *, *::before, *::after {
+  //     outline: auto;
+  //   }
+
+  .secret {
+    &__title {
+      min-height: calc(var(--text-base-size)*2);
+      margin-bottom: var(--text-base-size);
+    }
+
+    &__content {
+      min-height: calc(var(--text-base-size)*4);
+      margin-bottom: calc(var(--text-base-size));
+      
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    &__info {
+      cursor: default;
+      color: var(--color-text-tertiary);
+      
+      margin-bottom: calc(var(--text-base-size)/2);
+    }
+
+    &__actions {
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+
+  .friend {
+    width: min(100%, 230px);
+
+    &__photo {
+      display: grid;
+      place-content: center;
+      margin-bottom: var(--text-base-size);
+
+      &-frame {
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        border: 2px solid var(--color-background-secondary);
+        height: calc(var(--text-base-size)*4);
+        width: calc(var(--text-base-size)*4);
+      }
+    }
+  }
+}

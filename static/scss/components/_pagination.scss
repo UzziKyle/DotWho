@@ -5,10 +5,6 @@
   grid-template-columns: 1fr;
   place-content: center;
 
-    // *, *::before, *::after {
-    //   outline: auto;
-    // }
-
     &__list {
       display: flex;
       justify-content: center;
@@ -43,6 +39,7 @@
 
       &:hover {
         color: var(--color-pagination-tertiary);
+        border-color: var(--color-pagination-primary);
       }
     }
 
@@ -67,6 +64,7 @@
 
       &:hover {
         color: var(--color-pagination-secondary);
+        border-color: var(--color-pagination-secondary);
       }
     }
 

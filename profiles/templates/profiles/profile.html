@@ -26,19 +26,21 @@
             <a id='remove-friend' href={% url "remove-friend" pk=user.id %}>Remove Friend</a>
             {% endif %}
         </div>
-        <ul class='friends-container'>
-            <h3>Friends</h3>
+        <h3>Friends</h3>
+        <ul class='card-container'>
             {% for friend in friends %}
-            <a href={% url "profile-view" pk=friend.id %}>
-                <li class='friend-card'>
-                    <div class='friend-name'>
-                        <strong>@{{ friend.username }}</strong>
+            <li class='card friend'>
+                <div class='friend__photo'>
+                    <div class='friend__photo-frame'>
+                        <span class='text--xs'>pic here</span>
                     </div>
-                    <div class='friend-bio'>
-                        {{ friend.bio }}
-                    </div>
-                </li>
-            </a>
+                </div>
+                <div class='friend__name'>
+                    <a href={% url "profile-view" pk=friend.id %}>
+                    <strong>@{{ friend.username }}</strong>
+                    </a>
+                </div>
+            </li>
             {% empty %}
             {% if user == request.user %}
             <li>You have no friends...</li>
@@ -47,25 +49,27 @@
             {% endif %}
             {% endfor %}
         </ul>
-        <ul class='authored_secrets-container'>
-            {% if user == request.user %}
-            <h3>Your Latest Secrets</h3>
-            {% else %}
-            <h3>{{ user.username }}'s Secrets</h3>
-            {% endif %}
+        {% if user == request.user %}
+        <h3>Your Latest Secrets</h3>
+        {% else %}
+        <h3>{{ user.username }}'s Latest Secrets</h3>
+        {% endif %}
+        <ul class='card-container'>
             {% for secret in authored_secrets %}
-            <li class='secret-card'>
-                <div class='secret-title'>
+            <li class='card secret'>
+                <div class='secret__title'>
+                    <span><b>
                     {% if secret.title %}
                     {{secret.title}}
                     {% endif %}
+                    </b></span>
                 </div>
-                <div class='secret-content'>
+                <div class='secret__content text--sm'>
                     <p>
                     {{secret.content|truncatechars_html:60}}
                     </p>
                 </div>
-                <div class='secret-info'>
+                <div class='secret__info'>
                     {% comment %} <span class='created_at'>
                         {{secret.created_at}}
                     </span> {% endcomment %}
@@ -73,12 +77,12 @@
                         <strong>@{{secret.author.username}}</strong>
                     </span>
                 </div>
-                <div class='secret-actions'>
-                    <a href={% url "secret-view" pk=secret.pk %} class='button view'>Read</a>
+                <div class='secret__actions'>
+                    <a href={% url "secret-view" pk=secret.pk %} class=''>Read</a>
                     {% if request.user.is_authenticated %}
                         {% if request.user == secret.author %}
-                        <a href='#' class='button edit'>Edit</a>
-                        <a href='#' class='button delete'>Delete</a>
+                        <a href='#' class=''>Edit</a>
+                        <a href='#' class=''>Delete</a>
                         {% endif %}
                     {% endif %}
                 </div>
@@ -87,21 +91,23 @@
             <li>No secrets found...</li>
             {% endfor %}
         </ul>
-        <ul class='liked_secrets-container'>
-            <h3>Recently Liked</h3>
+        <h3>Recently Liked</h3>
+        <ul class='card-container'>
             {% for secret in liked_secrets %}
-            <li class='secret-card'>
-                <div class='secret-title'>
+            <li class='card secret'>
+                <div class='secret__title'>
+                    <span><b>
                     {% if secret.title %}
                     {{secret.title}}
                     {% endif %}
+                    </b></span>
                 </div>
-                <div class='secret-content'>
+                <div class='secret__content text--sm'>
                     <p>
                     {{secret.content|truncatechars_html:60}}
                     </p>
                 </div>
-                <div class='secret-info'>
+                <div class='secret__info'>
                     {% comment %} <span class='created_at'>
                         {{secret.created_at}}
                     </span> {% endcomment %}
@@ -117,12 +123,12 @@
                         {% endif %}
                     </span>
                 </div>
-                <div class='secret-actions'>
-                    <a href={% url "secret-view" pk=secret.pk %} class='button view'>Read</a>
+                <div class='secret__actions'>
+                    <a href={% url "secret-view" pk=secret.pk %} class='text--sm'>Read</a>
                     {% if request.user.is_authenticated %}
                         {% if request.user == secret.author %}
-                        <a href='#' class='button edit'>Edit</a>
-                        <a href='#' class='button delete'>Delete</a>
+                        <a href='#' class='text--sm'>Edit</a>
+                        <a href='#' class='text--sm'>Delete</a>
                         {% endif %}
                     {% endif %}
                 </div>

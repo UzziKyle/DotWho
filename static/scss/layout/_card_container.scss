@@ -1,0 +1,18 @@
+@use '../abstracts/mixins' as m;
+
+.card-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--text-base-size);
+    width: 80%;
+    margin-inline: auto;
+
+    @include m.respond-to('medium') {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: calc(var(--text-base-size)*1.5);
+    }
+
+    @include m.respond-to('large') {
+        gap: calc(var(--text-base-size)*2);
+    }
+}

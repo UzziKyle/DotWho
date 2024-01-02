@@ -10,25 +10,8 @@
             <h3>Hmm?</h3>
             <form method="POST" novalidate>
                 {% csrf_token %}
-                {% include "includes/secret_form.html" %}
-                {% comment %} <div class="form-field">
-                    <input type="text" name="{{ form.title.name }}" placeholder="Title" maxlength="150" required>
-                    {% if form.title.errors %}
-                    <p class="error">{{ form.title.errors.0 }}</p>
-                    {% endif %}
-                </div>
-                <div class="form-field">
-                    <textarea name="content" cols="40" rows="10" maxlength="280" required style="width: 142px; height: 145px;"></textarea>
-                    {% if form.content.errors %}
-                    <p class="error">{{ form.content.errors.0 }}</p>
-                    {% endif %}
-                </div>
-                <div class="form-field">
-                    {% if not request.user.is_authenticated %} {% else %} <label for="is_anonymous">Anonymous</label> {% endif %}
-                    <input type="checkbox" name="is_anonymous" {% if not request.user.is_authenticated %} hidden
-                    {% endif %} checked>
-                </div> {% endcomment %}
-                {% comment %} {{ form.as_p }} {% endcomment %}
+                {% include "includes/form.html" %}
+
                 <div class='button-container'>
                     <input type="submit" value="share" />
                 </div>

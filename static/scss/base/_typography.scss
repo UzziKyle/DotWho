@@ -97,16 +97,16 @@ p {
   line-height: var(--body-line-height);
 }
 
-a, a:visited, a:active {
+a, a:visited, a:active, a:hover {
   text-decoration: none;
 }
 
 a {
   color: var(--color-link);
 
-  &:visited {
-      color: var(--color-link-visited);
-  }
+  // &:visited {
+  //     color: var(--color-link-visited);
+  // }
 }
 
 b, strong {

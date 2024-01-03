@@ -15,7 +15,7 @@
         </ul>
         <ul class='nav__list'>
             {% if request.user.is_authenticated %}
-            <li class='nav__item text--md truncate'><strong><a href={% url "profile-view" pk=request.user.id %}> {{request.user.username | upper}} </a></strong></li>
+            <li class='nav__item nav__item--user text--md truncate'><strong><a href={% url "profile-view" pk=request.user.id %}> {{request.user.username}} </a></strong></li>
             <li class='nav__item text--md'><a href={% url "logout" %}> Logout </a></li>
             {% else %}
             <li class='nav__item text--md'><a href={% url "login" %}> Login </a></li>

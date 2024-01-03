@@ -3,7 +3,9 @@
 .card-container {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--text-base-size);
+    justify-content: center;
+    justify-items: stretch;
+    row-gap: var(--text-base-size);
     width: 80%;
     margin-inline: auto;
 

@@ -1,7 +1,7 @@
 .form {
     text-align: center;
-    background-color: var(--color-background-secondary-opaque);
-    padding: 1em 1.5em;
+    background-color: var(--color-background-secondary-transparent);
+    padding: 1.5em;
     border-radius: 1em;
     width: min(100%, 400px);
     margin-inline: auto;
@@ -46,6 +46,7 @@
     &__buttons {
         display: flex;
         justify-content: space-evenly;
+        margin-bottom: 1em;
     }
 
     &__bottom {

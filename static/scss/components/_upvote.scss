@@ -1,0 +1,28 @@
+.upvote {
+    display: flex;
+    align-items: center;
+
+    &__link {
+        margin-right: calc(var(--text-base-size) * 0.5);
+    }
+
+    &__icon {
+        color: var(--color-upvote-primary-transparent);
+        -webkit-text-fill-color: var(--color-upvote-secondary); /* Will override color (regardless of order) */
+        -webkit-text-stroke: 3px var(--color-upvote-primary-transparent);
+        font-size: calc(var(--text-base-size) * 2.5);
+        transition: all 0.05s ease-in-out;
+
+        &:hover, &:active, &:focus, &.has-vote {
+            color: var(--color-upvote-primary);
+            -webkit-text-fill-color: var(--color-upvote-primary-transparent);
+            -webkit-text-stroke: 3px var(--color-upvote-primary);
+            transition: all 0.05s ease-in-out;
+        }
+    }
+
+    &__count {
+        font-weight: 700;
+        margin-top: 2px;
+    }
+}

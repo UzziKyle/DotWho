@@ -1,0 +1,29 @@
+.form-page {
+    background-image: linear-gradient(
+        0deg,
+        hsl(0deg 0% 100%) 0%,
+        hsl(240deg 33% 98%) 5%,
+        hsl(231deg 37% 96%) 10%,
+        hsl(234deg 36% 95%) 14%,
+        hsl(235deg 35% 93%) 19%,
+        hsl(236deg 35% 91%) 24%,
+        hsl(234deg 36% 89%) 29%,
+        hsl(235deg 35% 87%) 33%,
+        hsl(235deg 35% 85%) 38%,
+        hsl(234deg 36% 84%) 43%,
+        hsl(235deg 35% 82%) 48%,
+        hsl(235deg 35% 82%) 52%,
+        hsl(234deg 36% 84%) 57%,
+        hsl(235deg 35% 85%) 62%,
+        hsl(235deg 35% 87%) 67%,
+        hsl(234deg 36% 89%) 71%,
+        hsl(236deg 35% 91%) 76%,
+        hsl(235deg 35% 93%) 81%,
+        hsl(234deg 36% 95%) 86%,
+        hsl(231deg 37% 96%) 90%,
+        hsl(240deg 33% 98%) 95%,
+        hsl(0deg 0% 100%) 100%
+      );
+    padding-block: 15vh;
+    padding-inline: calc(var(--text-base-size) * 1.5);
+}

@@ -1,0 +1,50 @@
+@use '../abstracts/mixins' as m;
+
+.friends-page {
+    text-align: center;
+    padding: calc(var(--text-base-size) * 1.5);
+
+    @include m.respond-to('medium') {
+        padding-inline: calc(var(--text-base-size) * 3);
+    }
+
+    @include m.respond-to('large') {
+        padding-inline: calc(var(--text-base-size) * 8);
+    }
+
+    &__requests {
+        margin-bottom: calc(var(--text-base-size) * 1.5);
+
+        h2 {
+            margin-bottom: var(--text-base-size);
+        }
+
+        &-received {
+            padding-block: var(--text-base-size);
+            margin-bottom: calc(var(--text-base-size) * 1.5);
+  
+            h3 {
+                margin-bottom: calc(var(--text-base-size) * 1.5);
+            }
+        }
+
+        &-sent {
+            padding-block: var(--text-base-size);
+            margin-bottom: calc(var(--text-base-size) * 1.5);
+
+
+            h3 {
+                margin-bottom: calc(var(--text-base-size) * 1.5);
+            }
+        }
+    }
+
+    &__current {
+        padding-block: var(--text-base-size);
+        margin-bottom: calc(var(--text-base-size) * 1.5);
+
+        h2 {
+            margin-bottom: var(--text-base-size);
+        }
+    }
+}

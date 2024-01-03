@@ -1,0 +1,58 @@
+@use '../abstracts/mixins' as m;
+
+.profile-page {
+    text-align: center;
+    padding-block: calc(var(--text-base-size) * 3);
+    padding-inline: calc(var(--text-base-size) * 1.5);
+
+    @include m.respond-to('medium') {
+        padding-inline: calc(var(--text-base-size) * 3);
+    }
+
+    @include m.respond-to('large') {
+        padding-inline: calc(var(--text-base-size) * 8);
+    }
+
+    &__user-info {
+        margin-bottom: calc(var(--text-base-size) * 1.5);
+
+        h2 {
+            margin-bottom: calc(var(--text-base-size) 0.5);
+        }
+        
+        .bio, .button-container {
+            margin-bottom: calc(var(--text-base-size) * 1.5);
+        }   
+
+        .button-container {
+            gap: var(--text-base-size);
+        }
+    }
+
+    &__friends {
+        padding-block: var(--text-base-size);
+        margin-bottom: calc(var(--text-base-size) * 1.5);
+
+        h3 {
+            margin-bottom: calc(var(--text-base-size) * 1.5);
+        }
+    }
+
+    &__authored-secrets {
+        padding-block: var(--text-base-size);
+        margin-bottom: calc(var(--text-base-size) * 1.5);
+
+        h3 {
+            margin-bottom: calc(var(--text-base-size) * 1.5);
+        }
+    }
+
+    &__liked-secrets {
+        padding-block: var(--text-base-size);
+        margin-bottom: calc(var(--text-base-size) * 1.5);
+
+        h3 {
+            margin-bottom: calc(var(--text-base-size) * 1.5);
+        }
+    }
+}

@@ -1,14 +1,23 @@
 :root {
+    // background
     --color-background-primary: hsl(0, 0%, 100%);
     --color-background-secondary: hsl(235, 36%, 81%);
-    --color-background-secondary-opaque: hsla(235, 36%, 81%, 0.5);
+    --color-background-secondary-transparent: hsla(235, 36%, 81%, 0.502);
     --color-background-tertiary: hsl(341, 12%, 30%);
+
+    // text
     --color-text-primary: hsl(0, 0%, 0%);
     --color-text-secondary: hsl(341, 12%, 30%);
     --color-text-tertiary: hsla(0, 0%, 50%, 1);
-    --color-text-tertiary-opaque: hsla(0, 0%, 50%, 0.75);
-    // --text-color:
+    --color-text-tertiary-transparent: hsla(0, 0%, 50%, 0.75);
+
+    // pagination
     --color-pagination-primary: hsl(235, 36%, 81%);
     --color-pagination-secondary: hsl(341, 12%, 30%);
     --color-pagination-tertiary: hsl(41, 100%, 93%);
+
+    // upvote
+    --color-upvote-primary: hsl(235, 36%, 81%);;
+    --color-upvote-primary-transparent: hsla(235, 36%, 81%, 0.5);
+    --color-upvote-secondary: hsl(0, 0%, 100%);
 }

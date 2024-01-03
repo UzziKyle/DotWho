@@ -1,9 +1,12 @@
 :root {
     --color-background-primary: hsl(0, 0%, 100%);
     --color-background-secondary: hsl(235, 36%, 81%);
+    --color-background-secondary-opaque: hsla(235, 36%, 81%, 0.5);
+    --color-background-tertiary: hsl(341, 12%, 30%);
     --color-text-primary: hsl(0, 0%, 0%);
     --color-text-secondary: hsl(341, 12%, 30%);
-    --color-text-tertiary: hsla(0, 0%, 50%, 0.75);
+    --color-text-tertiary: hsla(0, 0%, 50%, 1);
+    --color-text-tertiary-opaque: hsla(0, 0%, 50%, 0.75);
     // --text-color:
     --color-pagination-primary: hsl(235, 36%, 81%);
     --color-pagination-secondary: hsl(341, 12%, 30%);

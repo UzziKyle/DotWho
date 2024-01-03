@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main>
-    <div class='form-container'>
-        <h3>Edit Profile</h3>
-        <form method="POST" enctype="multipart/form-data">
+<div class='form-container'>
+    <form class="form" method="POST" enctype="multipart/form-data">
+        <div class="form__title">
+            <h3>Edit Profile</h3>
+        </div>
+        <div class="form__content">
             {% csrf_token %}
             {% include "includes/form.html" %}
-
-            <button type="submit">Save</button>
-        </form>
-    </div>
-</main>
+        </div>
+        <div class="form__buttons">
+            <button class="button" type="submit">Save</button>
+        </div>
+    </form>
+</div>
 {% endblock content %}

@@ -1,67 +1,65 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main>
-    <div class='friends'>
-        <h3>Friends</h3>
-        <ul class='card-container'>
-            {% for friend in friends %}
-            <li class='card friend'>
-                <div class='friend__photo'>
-                    <div class='friend__photo-frame'>
-                        <span class='text--xs'>pic here</span>
-                    </div>
+<div class='friends'>
+    <h3>Friends</h3>
+    <ul class='card-container'>
+        {% for friend in friends %}
+        <li class='card friend'>
+            <div class='friend__photo'>
+                <div class='friend__photo-frame'>
+                    <span class='text--xs'>pic here</span>
                 </div>
-                <div class='friend__name'>
-                    <a href={% url "profile-view" pk=friend.id %}>
-                    <strong>@{{ friend.username }}</strong>
-                    </a>
-                </div>
-            </li>
-            {% empty %}
-            <li>You have no friends...</li>
-            {% endfor %}
+            </div>
+            <div class='friend__name'>
+                <a href={% url "profile-view" pk=friend.id %}>
+                <strong>@{{ friend.username }}</strong>
+                </a>
+            </div>
+        </li>
+        {% empty %}
+        <li>You have no friends...</li>
+        {% endfor %}
 
-            {% include "includes/pagination.html" %}
-        </ul>
-        <h3>Wants to be your friend</h3>
-        <ul class='card-container'>
-            {% for user in friend_requests_received %}
-            <li class='card friend'>
-                <div class='friend__photo'>
-                    <div class='friend__photo-frame'>
-                        <span class='text--xs'>pic here</span>
-                    </div>
+        {% include "includes/pagination.html" %}
+    </ul>
+    <h3>Wants to be your friend</h3>
+    <ul class='card-container'>
+        {% for user in friend_requests_received %}
+        <li class='card friend'>
+            <div class='friend__photo'>
+                <div class='friend__photo-frame'>
+                    <span class='text--xs'>pic here</span>
                 </div>
-                <div class='friend__name'>
-                    <a href={% url "profile-view" pk=user.id %}>
-                    <strong>@{{ user.username }}</strong>
-                    </a>
+            </div>
+            <div class='friend__name'>
+                <a href={% url "profile-view" pk=user.id %}>
+                <strong>@{{ user.username }}</strong>
+                </a>
+            </div>
+        </li>
+        {% empty %}
+        <li>You have no friend requests...</li>
+        {% endfor %}
+    </ul>
+    <h3>Awaiting for response...</h3>
+    <ul class='card-container'>
+        {% for user in friend_requests_sent %}
+        <li class='card friend'>
+            <div class='friend__photo'>
+                <div class='friend__photo-frame'>
+                    <span class='text--xs'>pic here</span>
                 </div>
-            </li>
-            {% empty %}
-            <li>You have no friend requests...</li>
-            {% endfor %}
-        </ul>
-        <h3>Awaiting for response...</h3>
-        <ul class='card-container'>
-            {% for user in friend_requests_sent %}
-            <li class='card friend'>
-                <div class='friend__photo'>
-                    <div class='friend__photo-frame'>
-                        <span class='text--xs'>pic here</span>
-                    </div>
-                </div>
-                <div class='friend__name'>
-                    <a href={% url "profile-view" pk=user.id %}>
-                    <strong>@{{ user.username }}</strong>
-                    </a>
-                </div>
-            </li>
-            {% empty %}
-            <li>You have no friend requests...</li>
-            {% endfor %}
-        </ul>
-    </div>
-</main>
+            </div>
+            <div class='friend__name'>
+                <a href={% url "profile-view" pk=user.id %}>
+                <strong>@{{ user.username }}</strong>
+                </a>
+            </div>
+        </li>
+        {% empty %}
+        <li>You have no friend requests...</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock content %}

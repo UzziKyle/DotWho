@@ -10,23 +10,23 @@
 
 {% for field in form %}
 
-<div class="col-md-6">
-    <div class="form-group">
+<div class="form__field">
     {% if field.field.widget.input_type == 'checkbox' %}
     <div class="form-check form-switch">
         {% render_field field class="form-check-input ms-auto" %}
         <label class="form-check-label text-body ms-3 text-truncate w-250 mb-0" for="flexSwitchCheckDefault5">{{ field.label_tag }}</label>
     </div>
     {% else %}
-    <label for="example-text-input" class="form-control-label">{{ field.label_tag}}</label>
-    {% render_field field class="form-control" %}
+    <label for="example-text-input" class="form-control-label">{{ field.label_tag}}
+        
+    </label>
+    {% render_field field %}
     {% endif %}
-</div>
-</div>
+
     {% for error in field.errors %}
-    <div class="invalid-feedback">
+    <div class="error">
     {{ error }}
     </div>
     {% endfor %}
-    
+</div>
 {% endfor %}

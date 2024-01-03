@@ -1,44 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main>
-  <form method="post" novalidate>
-    {% csrf_token %}
-    <h2>Register</h2>
+<div class="form-container">
+  <form class="form" method="post" novalidate>
+    <div class="form__header">
+      <h2>Register</h2>
+    </div>
+    <div class="form__content">
+      {% csrf_token %}
 
-    <div class="form-field">
-        {% if field.errors %}
-          <p class="error">{{ field.errors.0 }}</p>
+      <div class="form__field">
+          {% if field.errors %}
+            <span class="error">{{ field.errors.0 }}<span>
+          {% endif %}
+      </div>  
+
+      <div class="form__field {% if form.username.errors %}has-error{% endif %}">
+        <input type="text" name="{{ form.username.name }}" placeholder="Username" maxlength="150" required>
+        {% if form.username.errors %}
+        <span class="error">{{ form.username.errors.0 }}<span>
         {% endif %}
-    </div>  
-
-    <div class="form-field">
-      <input type="text" name="{{ form.username.name }}" placeholder="Username" maxlength="150" required>
-      {% if form.username.errors %}
-      <p class="error">{{ form.username.errors.0 }}</p>
-      {% endif %}
-    </div>
-    <div class="form-field">
-      <input type="text" name="{{ form.email.name }}" placeholder="Email Address" maxlength="254" required>
-      {% if form.email.errors %}
-      <p class="error">{{ form.email.errors.0 }}</p>
-      {% endif %}
-    </div>
-    <div class="form-field">
-      <input type="password" name="{{ form.password1.name }}" autocomple="new-password" placeholder="Password" required>
-      {% if form.password1.errors %}
-      <p class="error">{{ form.password1.errors.0 }}</p>
-      {% endif %}
-    </div>
-    <div class="form-field">
-      <input type="password" name="{{ form.password2.name }}" autocomple="new-password" placeholder="Password Confirmation" required>
-      {% if form.password2.errors %}
-      <p class="error">{{ form.password2.errors.0 }}</p>
-      {% endif %}
+      </div>
+      <div class="form__field {% if form.email.errors %}has-error{% endif %}">
+        <input type="text" name="{{ form.email.name }}" placeholder="Email Address" maxlength="254" required>
+        {% if form.email.errors %}
+        <span class="error">{{ form.email.errors.0 }}<span>
+        {% endif %}
+      </div>
+      <div class="form__field {% if form.password1.errors %}has-error{% endif %}">
+        <input type="password" name="{{ form.password1.name }}" autocomple="new-password" placeholder="Password" required>
+        {% if form.password1.errors %}
+        <span class="error">{{ form.password1.errors.0 }}<span>
+        {% endif %}
+      </div>
+      <div class="form__field {% if form.password2.errors %}has-error{% endif %}">
+        <input type="password" name="{{ form.password2.name }}" autocomple="new-password" placeholder="Password Confirmation" required>
+        {% if form.password2.errors %}
+        <span class="error">{{ form.password2.errors.0 }}<span>
+        {% endif %}
+      </div>
     </div>
 
-    <input class="button" type="submit" value="Sign Up"/>
-    <p id="login">Already have an account? <a href="{%url 'login' %}">Login Here</a></p>
+    <div class="form__buttons">
+      <input class="button" type="submit" value="Sign Up"/>
+    </div>
+    <div class="form__footer">
+      <span>Already have an account? <a href="{%url 'login' %}">Login Here</a></span>
+    </div>
   </form>
-</main>
+</div>
 {% endblock content %}

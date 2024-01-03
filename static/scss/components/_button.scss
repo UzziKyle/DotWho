@@ -1,0 +1,22 @@
+.button {
+    background-color: var(--color-background-secondary);
+    color: var(--color-text-secondary);
+    padding: 0.5em 1em;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 4px var(--color-text-secondary);
+    margin-bottom: 2px;
+    transition: all 0.1s ease-in-out;
+
+    &:hover {
+        box-shadow: 0 4px var(--color-text-secondary), 0 0 8px var(--color-background-secondary);
+    }
+
+    &:focus {
+        box-shadow: 0 2px var(--color-text-secondary), 0 0 8px var(--color-background-secondary);
+        margin-top: 2px;
+        margin-bottom: 0;
+        transition: all 0.1s ease-in-out;
+    }
+}
+

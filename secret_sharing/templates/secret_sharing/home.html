@@ -2,93 +2,91 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<main>
-    <button class='btn-modal open'><b>Tell a Secret</b></button>
-    <div class=''>
-        <div class='form-container'>
-            <button class='btn-modal close'><b>X</b></button>
-            <h3>Hmm?</h3>
-            <form method="POST" novalidate>
-                {% csrf_token %}
-                {% include "includes/form.html" %}
+<button class='btn-modal open'><b>Tell a Secret</b></button>
+<div class=''>
+    <div class='form-container'>
+        <button class='btn-modal close'><b>X</b></button>
+        <h3>Hmm?</h3>
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            {% include "includes/form.html" %}
 
-                <div class='button-container'>
-                    <input type="submit" value="share" />
-                </div>
-            </form>
+            <div class='button-container'>
+                <input type="submit" value="share" />
+            </div>
+        </form>
+    </div>
+</div>
+<div class='utility'>
+    <select name="sort" id="sort-list" onchange="location = finalurl()">
+        <option value="" id="placeholder" disabled selected hidden>Sort</option>
+        <option id="-created_at" value="-created_at">Latest</option>
+        <option id="created_at" value="created_at">Oldest</option>
+        <option id="-upvote_count" value="-upvote_count">Popular</option>
+        <option id="upvote_count" value="upvote_count">Unpopular</option>
+    </select>
+</div>
+<script>
+    // for getting the sorting status to be displayed in sorting dropdown placeholder
+    function get(name) {
+        if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))  //location.search give query sling part
+        return decodeURIComponent(name[1]);
+    }
+    
+    if(get('ordering'))
+    document.getElementById('placeholder').innerHTML = "Sort: " + document.getElementById(get('ordering')).innerHTML
+    
+    // for getting url after applying ordering
+    function finalurl() {
+        var url = new URL(window.location.href)
+        var search_params = url.searchParams
+        search_params.set('ordering', document.getElementById("sort-list").value)
+        url.search = search_params.toString()
+        var new_url = url.toString()
+        return new_url
+    }
+</script>
+<ul class='card-container'>
+    {% for secret in secrets %}
+    <li class='card secret'>
+        <div class='secret__title'>
+            <span><b>
+            {% if secret.title %}
+            {{secret.title}}
+            {% endif %}
+            </b></span>
         </div>
-    </div>
-    <div class='utility'>
-        <select name="sort" id="sort-list" onchange="location = finalurl()">
-            <option value="" id="placeholder" disabled selected hidden>Sort</option>
-            <option id="-created_at" value="-created_at">Latest</option>
-            <option id="created_at" value="created_at">Oldest</option>
-            <option id="-upvote_count" value="-upvote_count">Popular</option>
-            <option id="upvote_count" value="upvote_count">Unpopular</option>
-        </select>
-    </div>
-    <script>
-        // for getting the sorting status to be displayed in sorting dropdown placeholder
-        function get(name) {
-          if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))  //location.search give query sling part
-            return decodeURIComponent(name[1]);
-        }
-      
-        if(get('ordering'))
-        document.getElementById('placeholder').innerHTML = "Sort: " + document.getElementById(get('ordering')).innerHTML
-      
-        // for getting url after applying ordering
-        function finalurl() {
-          var url = new URL(window.location.href)
-          var search_params = url.searchParams
-          search_params.set('ordering', document.getElementById("sort-list").value)
-          url.search = search_params.toString()
-          var new_url = url.toString()
-          return new_url
-        }
-    </script>
-    <ul class='card-container'>
-        {% for secret in secrets %}
-        <li class='card secret'>
-            <div class='secret__title'>
-                <span><b>
-                {% if secret.title %}
-                {{secret.title}}
+        <div class='secret__content text--sm'>
+            <p>
+            {{secret.content|truncatechars_html:60}}
+            </p>
+        </div>
+        <div class='secret__info'>
+            {% comment %} <span class='created_at'>
+                {{secret.created_at}}
+            </span> {% endcomment %}
+            <span class='posted_by'>
+                {% if secret.author %}
+                <a href={% url "profile-view" pk=secret.author.id %}><strong>@{{secret.author.username}}</strong></a>
+                {% else %}
+                <strong>@anonymous</strong>
                 {% endif %}
-                </b></span>
-            </div>
-            <div class='secret__content text--sm'>
-                <p>
-                {{secret.content|truncatechars_html:60}}
-                </p>
-            </div>
-            <div class='secret__info'>
-                {% comment %} <span class='created_at'>
-                    {{secret.created_at}}
-                </span> {% endcomment %}
-                <span class='posted_by'>
-                    {% if secret.author %}
-                    <a href={% url "profile-view" pk=secret.author.id %}><strong>@{{secret.author.username}}</strong></a>
-                    {% else %}
-                    <strong>@anonymous</strong>
-                    {% endif %}
-                </span>
-            </div>
-            <div class='secret__actions'>
-                <a href={% url "secret-view" pk=secret.pk %} class=''>Read</a>
-                {% if request.user.is_authenticated %}
-                {% if request.user == secret.author %}
-                <a href={% url "secret-edit" pk=secret.pk%} class=''>Edit</a>
-                <a href={% url "secret-delete" pk=secret.pk%} class=''>Delete</a>
-                {% endif %}
-                {% endif %}
-            </div>
-        </li>
-        {% empty %}
-        <li>No secrets found...</li>
-        {% endfor %}
-    </ul>
+            </span>
+        </div>
+        <div class='secret__actions'>
+            <a href={% url "secret-view" pk=secret.pk %} class=''>Read</a>
+            {% if request.user.is_authenticated %}
+            {% if request.user == secret.author %}
+            <a href={% url "secret-edit" pk=secret.pk%} class=''>Edit</a>
+            <a href={% url "secret-delete" pk=secret.pk%} class=''>Delete</a>
+            {% endif %}
+            {% endif %}
+        </div>
+    </li>
+    {% empty %}
+    <li>No secrets found...</li>
+    {% endfor %}
+</ul>
 
-    {% include "includes/pagination.html" %}
-</main>
+{% include "includes/pagination.html" %}
 {% endblock content %}

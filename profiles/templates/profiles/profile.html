@@ -1,145 +1,143 @@
 {% extends "base.html" %}
 
 {% block content %}
-<main>
-    {% if request.user.is_authenticated %}
-    <div class="profile">
-        <div class="info-container">
-            <h2>{{user.username}}</h2>
-            {% if profile.bio %}
-            <div class="bio">
-                <p>{{ profile.bio }}</p>
-                {% else %}
-                <p></p>
-            </div>
-            {% endif %}
-            {% if user == request.user %}
-            <a id='edit' href={% url "profile-edit" pk=request.user.id %}>Edit Profile</a>
-            {% elif is_requested_by %}
-            <a id='accept-friend' href={% url "accept-friend-request" pk=user.id %}>Accept</a>
-            <a id='decline-friend' href={% url "decline-friend-request" pk=user.id %}>Decline</a>
-            {% elif has_requested_to %}
-            <span>Waiting for Response</span>
-            {% elif not is_a_friend %}
-            <a id='add-friend' href={% url "add-friend" pk=user.id %}>Add Friend</a>
+{% if request.user.is_authenticated %}
+<div class="profile">
+    <div class="info-container">
+        <h2>{{user.username}}</h2>
+        {% if profile.bio %}
+        <div class="bio">
+            <p>{{ profile.bio }}</p>
             {% else %}
-            <a id='remove-friend' href={% url "remove-friend" pk=user.id %}>Remove Friend</a>
-            {% endif %}
+            <p></p>
         </div>
-        <h3>Friends</h3>
-        <ul class='card-container'>
-            {% for friend in friends %}
-            <li class='card friend'>
-                <div class='friend__photo'>
-                    <div class='friend__photo-frame'>
-                        <span class='text--xs'>pic here</span>
-                    </div>
-                </div>
-                <div class='friend__name'>
-                    <a href={% url "profile-view" pk=friend.id %}>
-                    <strong>@{{ friend.username }}</strong>
-                    </a>
-                </div>
-            </li>
-            {% empty %}
-            {% if user == request.user %}
-            <li>You have no friends...</li>
-            {% else %}
-            <li>{{ user.username }} has no friends...</li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-        {% if user == request.user %}
-        <h3>Your Latest Secrets</h3>
-        {% else %}
-        <h3>{{ user.username }}'s Latest Secrets</h3>
         {% endif %}
-        <ul class='card-container'>
-            {% for secret in authored_secrets %}
-            <li class='card secret'>
-                <div class='secret__title'>
-                    <span><b>
-                    {% if secret.title %}
-                    {{secret.title}}
-                    {% endif %}
-                    </b></span>
-                </div>
-                <div class='secret__content text--sm'>
-                    <p>
-                    {{secret.content|truncatechars_html:60}}
-                    </p>
-                </div>
-                <div class='secret__info'>
-                    {% comment %} <span class='created_at'>
-                        {{secret.created_at}}
-                    </span> {% endcomment %}
-                    <span class='posted_by'>
-                        <strong>@{{secret.author.username}}</strong>
-                    </span>
-                </div>
-                <div class='secret__actions'>
-                    <a href={% url "secret-view" pk=secret.pk %} class=''>Read</a>
-                    {% if request.user.is_authenticated %}
-                        {% if request.user == secret.author %}
-                        <a href={% url "secret-edit" pk=secret.pk%} class=''>Edit</a>
-                        <a href={% url "secret-delete" pk=secret.pk%} class=''>Delete</a>
-                        {% endif %}
-                    {% endif %}
-                </div>
-            </li>
-            {% empty %}
-            <li>No secrets found...</li>
-            {% endfor %}
-        </ul>
-        <h3>Recently Liked</h3>
-        <ul class='card-container'>
-            {% for secret in liked_secrets %}
-            <li class='card secret'>
-                <div class='secret__title'>
-                    <span><b>
-                    {% if secret.title %}
-                    {{secret.title}}
-                    {% endif %}
-                    </b></span>
-                </div>
-                <div class='secret__content text--sm'>
-                    <p>
-                    {{secret.content|truncatechars_html:60}}
-                    </p>
-                </div>
-                <div class='secret__info'>
-                    {% comment %} <span class='created_at'>
-                        {{secret.created_at}}
-                    </span> {% endcomment %}
-                    <span class='posted_by'>
-                        {% if secret.author %}
-                            {% if secret.author == user %}
-                            <strong>@{{secret.author.username}}</strong>
-                            {% else %}
-                            <a href={% url "profile-view" pk=secret.author.id %}><strong>@{{secret.author.username}}</strong></a>
-                            {% endif %}
-                        {% else %}
-                        <strong>@anonymous</strong>
-                        {% endif %}
-                    </span>
-                </div>
-                <div class='secret__actions'>
-                    <a href={% url "secret-view" pk=secret.pk %} class='text--sm'>Read</a>
-                    {% if request.user.is_authenticated %}
-                        {% if request.user == secret.author %}
-                        <a href={% url "secret-edit" pk=secret.pk%} class='text--sm'>Edit</a>
-                        <a href={% url "secret-delete" pk=secret.pk%} class='text--sm'>Delete</a>
-                        {% endif %}
-                    {% endif %}
-                </div>
-            </li>
-            {% empty %}
-            <li>Doesn't like anything...</li>
-            {% endfor %}
-        </ul>
+        {% if user == request.user %}
+        <a id='edit' href={% url "profile-edit" pk=request.user.id %}>Edit Profile</a>
+        {% elif is_requested_by %}
+        <a id='accept-friend' href={% url "accept-friend-request" pk=user.id %}>Accept</a>
+        <a id='decline-friend' href={% url "decline-friend-request" pk=user.id %}>Decline</a>
+        {% elif has_requested_to %}
+        <span>Waiting for Response</span>
+        {% elif not is_a_friend %}
+        <a id='add-friend' href={% url "add-friend" pk=user.id %}>Add Friend</a>
+        {% else %}
+        <a id='remove-friend' href={% url "remove-friend" pk=user.id %}>Remove Friend</a>
+        {% endif %}
     </div>
+    <h3>Friends</h3>
+    <ul class='card-container'>
+        {% for friend in friends %}
+        <li class='card friend'>
+            <div class='friend__photo'>
+                <div class='friend__photo-frame'>
+                    <span class='text--xs'>pic here</span>
+                </div>
+            </div>
+            <div class='friend__name'>
+                <a href={% url "profile-view" pk=friend.id %}>
+                <strong>@{{ friend.username }}</strong>
+                </a>
+            </div>
+        </li>
+        {% empty %}
+        {% if user == request.user %}
+        <li>You have no friends...</li>
+        {% else %}
+        <li>{{ user.username }} has no friends...</li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% if user == request.user %}
+    <h3>Your Latest Secrets</h3>
     {% else %}
-    <h3>Login or Register to see who's in DotWho.?</h3>
+    <h3>{{ user.username }}'s Latest Secrets</h3>
     {% endif %}
-</main>
+    <ul class='card-container'>
+        {% for secret in authored_secrets %}
+        <li class='card secret'>
+            <div class='secret__title'>
+                <span><b>
+                {% if secret.title %}
+                {{secret.title}}
+                {% endif %}
+                </b></span>
+            </div>
+            <div class='secret__content text--sm'>
+                <p>
+                {{secret.content|truncatechars_html:60}}
+                </p>
+            </div>
+            <div class='secret__info'>
+                {% comment %} <span class='created_at'>
+                    {{secret.created_at}}
+                </span> {% endcomment %}
+                <span class='posted_by'>
+                    <strong>@{{secret.author.username}}</strong>
+                </span>
+            </div>
+            <div class='secret__actions'>
+                <a href={% url "secret-view" pk=secret.pk %} class=''>Read</a>
+                {% if request.user.is_authenticated %}
+                    {% if request.user == secret.author %}
+                    <a href={% url "secret-edit" pk=secret.pk%} class=''>Edit</a>
+                    <a href={% url "secret-delete" pk=secret.pk%} class=''>Delete</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </li>
+        {% empty %}
+        <li>No secrets found...</li>
+        {% endfor %}
+    </ul>
+    <h3>Recently Liked</h3>
+    <ul class='card-container'>
+        {% for secret in liked_secrets %}
+        <li class='card secret'>
+            <div class='secret__title'>
+                <span><b>
+                {% if secret.title %}
+                {{secret.title}}
+                {% endif %}
+                </b></span>
+            </div>
+            <div class='secret__content text--sm'>
+                <p>
+                {{secret.content|truncatechars_html:60}}
+                </p>
+            </div>
+            <div class='secret__info'>
+                {% comment %} <span class='created_at'>
+                    {{secret.created_at}}
+                </span> {% endcomment %}
+                <span class='posted_by'>
+                    {% if secret.author %}
+                        {% if secret.author == user %}
+                        <strong>@{{secret.author.username}}</strong>
+                        {% else %}
+                        <a href={% url "profile-view" pk=secret.author.id %}><strong>@{{secret.author.username}}</strong></a>
+                        {% endif %}
+                    {% else %}
+                    <strong>@anonymous</strong>
+                    {% endif %}
+                </span>
+            </div>
+            <div class='secret__actions'>
+                <a href={% url "secret-view" pk=secret.pk %} class='text--sm'>Read</a>
+                {% if request.user.is_authenticated %}
+                    {% if request.user == secret.author %}
+                    <a href={% url "secret-edit" pk=secret.pk%} class='text--sm'>Edit</a>
+                    <a href={% url "secret-delete" pk=secret.pk%} class='text--sm'>Delete</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </li>
+        {% empty %}
+        <li>Doesn't like anything...</li>
+        {% endfor %}
+    </ul>
+</div>
+{% else %}
+<h3>Login or Register to see who's in DotWho.?</h3>
+{% endif %}
 {% endblock content %}

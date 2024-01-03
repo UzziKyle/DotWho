@@ -4,12 +4,6 @@
   position: relative;
   background-color: var(--color-background-secondary);
   padding-block: var(--text-base-size);
-  // for debugging purposes
-  // outline: 2px solid limegreen;
-
-  // *, *::before, *::after {
-  //     outline: auto;
-  // }
 
   @include m.respond-to('medium') {
     display: grid;

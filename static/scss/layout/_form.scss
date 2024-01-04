@@ -14,6 +14,14 @@
     //     outline: auto;
     // }
 
+    &.is-modal {
+        background-color: var(--color-background-secondary);
+
+        .button {
+            outline: 2px solid var(--color-background-tertiary);
+        }
+    }
+
     &__header {
         margin-bottom: 1em;
     }
@@ -34,6 +42,10 @@
             padding: 0.5em;
             border-radius: 0.5em;
             border: none;
+        }
+
+        textarea {
+            height: calc(var(--text-base-size) * 8);
         }
         
         .error {

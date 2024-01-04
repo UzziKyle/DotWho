@@ -1,31 +1,94 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
+{% load static %}
 
 {% block content %}
-<button class='btn-modal open'><b>Tell a Secret</b></button>
-<div class=''>
+<div class='home-page'>
+    <div class='home-page__header'>
+        <h1>Secrets</h1>
+        <div class='select'>
+            <select class='select__widget' name="sort" id="sort-list" onchange="location = finalurl()">
+                <option value="" id="placeholder" disabled selected hidden>Sort</option>
+                <option id="-created_at" value="-created_at">Latest</option>
+                <option id="created_at" value="created_at">Oldest</option>
+                <option id="-upvote_count" value="-upvote_count">Popular</option>
+                <option id="upvote_count" value="upvote_count">Unpopular</option>
+            </select>
+        </div>
+        <div class='button-holder'>
+            <span class='button open-modal' tabindex="0"><b>Tell A Secret</b></span>
+        </div>
+    </div>
+    <div class='home-page__content'>
+        <ul class='card-container'>
+            {% if secrets %}
+            {% for secret in secrets %}
+            <li class='card secret'>
+                <div class='secret__title'>
+                    <span><b>
+                    {% if secret.title %}
+                    {{secret.title}}
+                    {% endif %}
+                    </b></span>
+                </div>
+                <div class='secret__content text--sm'>
+                    <p>
+                    {{secret.content|truncatechars_html:60}}
+                    </p>
+                </div>
+                <div class='secret__info'>
+                    {% comment %} <span class='created_at'>
+                        {{secret.created_at}}
+                    </span> {% endcomment %}
+                    <span class='posted_by'>
+                        {% if secret.author %}
+                        <a href={% url "profile-view" pk=secret.author.id %}><strong>@{{secret.author.username}}</strong></a>
+                        {% else %}
+                        <strong>@anonymous</strong>
+                        {% endif %}
+                    </span>
+                </div>
+                <div class='secret__actions'>
+                    <a href={% url "secret-view" pk=secret.pk %} class=''>Read</a>
+                    {% if request.user.is_authenticated %}
+                    {% if request.user == secret.author %}
+                    <a href={% url "secret-edit" pk=secret.pk%} class=''>Edit</a>
+                    <a href={% url "secret-delete" pk=secret.pk%} class=''>Delete</a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+            {% else %}
+            <span>No secrets found...</span>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="home-page__footer">
+        {% include "includes/pagination.html" %}
+    </div>
+</div>
+<div class='modal'>
     <div class='form-container'>
-        <button class='btn-modal close'><b>X</b></button>
-        <h3>Hmm?</h3>
-        <form method="POST" novalidate>
-            {% csrf_token %}
-            {% include "includes/form.html" %}
+        <form class='form is-modal' method="POST">
+            <div class='form__header'>
+                <h3>Hmm?</h3>
+            </div>
+            <div class='form__content'>
+                {% csrf_token %}
+                {% include "includes/form.html" %}
+            </div>
 
-            <div class='button-container'>
-                <input type="submit" value="share" />
+            <div class='form__buttons'>
+                <input class='button' type="submit" value="Share" />
+                <span class='button close-modal' tabindex="0">Close</span>
             </div>
         </form>
     </div>
 </div>
-<div class='utility'>
-    <select name="sort" id="sort-list" onchange="location = finalurl()">
-        <option value="" id="placeholder" disabled selected hidden>Sort</option>
-        <option id="-created_at" value="-created_at">Latest</option>
-        <option id="created_at" value="created_at">Oldest</option>
-        <option id="-upvote_count" value="-upvote_count">Popular</option>
-        <option id="upvote_count" value="upvote_count">Unpopular</option>
-    </select>
-</div>
+{% endblock content %}
+
+{% block scripts %}
 <script>
     // for getting the sorting status to be displayed in sorting dropdown placeholder
     function get(name) {
@@ -46,47 +109,5 @@
         return new_url
     }
 </script>
-<ul class='card-container'>
-    {% for secret in secrets %}
-    <li class='card secret'>
-        <div class='secret__title'>
-            <span><b>
-            {% if secret.title %}
-            {{secret.title}}
-            {% endif %}
-            </b></span>
-        </div>
-        <div class='secret__content text--sm'>
-            <p>
-            {{secret.content|truncatechars_html:60}}
-            </p>
-        </div>
-        <div class='secret__info'>
-            {% comment %} <span class='created_at'>
-                {{secret.created_at}}
-            </span> {% endcomment %}
-            <span class='posted_by'>
-                {% if secret.author %}
-                <a href={% url "profile-view" pk=secret.author.id %}><strong>@{{secret.author.username}}</strong></a>
-                {% else %}
-                <strong>@anonymous</strong>
-                {% endif %}
-            </span>
-        </div>
-        <div class='secret__actions'>
-            <a href={% url "secret-view" pk=secret.pk %} class=''>Read</a>
-            {% if request.user.is_authenticated %}
-            {% if request.user == secret.author %}
-            <a href={% url "secret-edit" pk=secret.pk%} class=''>Edit</a>
-            <a href={% url "secret-delete" pk=secret.pk%} class=''>Delete</a>
-            {% endif %}
-            {% endif %}
-        </div>
-    </li>
-    {% empty %}
-    <li>No secrets found...</li>
-    {% endfor %}
-</ul>
-
-{% include "includes/pagination.html" %}
-{% endblock content %}
+<script src='{% static "js/modal.js" %}'></script>
+{% endblock scripts %}

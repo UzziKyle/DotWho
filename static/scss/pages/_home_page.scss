@@ -1,0 +1,36 @@
+@use '../abstracts/mixins' as m;
+
+.home-page {
+    text-align: center;
+    padding-block: calc(var(--text-base-size) * 3);
+    padding-inline: calc(var(--text-base-size) * 1.5);
+
+    @include m.respond-to('medium') {
+        padding-inline: calc(var(--text-base-size) * 3);
+    }
+
+    @include m.respond-to('large') {
+        padding-inline: calc(var(--text-base-size) * 8);
+    }
+
+    &__header {
+        margin-bottom: calc(var(--text-base-size) * 1.5);
+
+        h1 {
+            text-transform: uppercase;
+            margin-bottom: calc(var(--text-base-size) * 0.5);
+        }
+
+        .select {
+            margin-bottom: var(--text-base-size);
+        }
+
+        .button-holder {
+            margin-bottom: var(--text-base-size);
+        }
+    }
+
+    &__content {
+        margin-bottom: calc(var(--text-base-size) * 3);
+    }
+}

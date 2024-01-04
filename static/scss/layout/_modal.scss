@@ -1,0 +1,12 @@
+.modal {
+    display: grid;
+    place-content: center;
+    height: 100vh;
+    padding-inline: calc(var(--text-base-size) * 1.5);
+    z-index: -20;
+    background: rgba(0, 0, 0, 0.5);
+
+    &.is-open {
+        z-index: 20;
+    }
+}

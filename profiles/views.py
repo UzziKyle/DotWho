@@ -107,7 +107,7 @@ def view_profile(request, pk):
     context['friends'] = friends
     context['authored_secrets'] = authored_secrets
     context['liked_secrets'] = liked_secrets
-
+    
     return render(request, 'profiles/profile.html', context)
 
 
@@ -124,7 +124,7 @@ def edit_profile(request, pk):
         context['form'] = ProfileForm(instance=profile)
     
     elif request.method == 'POST':
-        form = ProfileForm(request.POST, instance=profile)
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
 
         if form.is_valid():
             form.save()

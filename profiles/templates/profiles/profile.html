@@ -4,7 +4,10 @@
 {% if request.user.is_authenticated %}
 <div class="profile-page">
     <div class="profile-page__user-info">
-        <h2>{{user.username}}</h2>
+        <div class="photo-frame photo-frame--lg">
+            <img src="{{ profile.image_url }}" alt="{{user.username}}'s profile photo" />
+        </div>
+        <h2 class="username">{{user.username}}</h2>
         <div class="bio">
             {% if profile.bio %}
             <p>{{ profile.bio }}</p>
@@ -35,8 +38,8 @@
             {% for friend in friends %}
             <li class='card friend'>
                 <div class='friend__photo'>
-                    <div class='friend__photo-frame'>
-                        <span class='text--xs'>pic here</span>
+                    <div class='photo-frame photo-frame--sm'>
+                        <img src={{ friend.profile.image_url }} alt="{{ friend.username }}'s profile photo">
                     </div>
                 </div>
                 <div class='friend__name'>

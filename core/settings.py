@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'secret_sharing',
     
     'comment',
-    'widget_tweaks',    
+    'widget_tweaks', 
+    'django_cleanup.apps.CleanupConfig',   
 ]
 
 MIDDLEWARE = [
@@ -128,6 +129,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -137,3 +139,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # MY SETTINGS
 LOGIN_URL = 'login'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -23,8 +23,8 @@
     flex-direction: row;
     justify-content: left;
     align-items: center;
-    gap: 1.5em;
-    padding-inline: 1.5em;
+    gap: 1em;
+    padding-inline: 3em;
 
     @include m.respond-to('medium') {
       flex-direction: column;
@@ -59,20 +59,11 @@
     }
   }
 
-  .friend {
-    &__photo {
-      display: grid;
-      place-content: center;
-      // margin-bottom: var(--text-base-size);
-
-      &-frame {
-        display: grid;
-        place-items: center;
-        border-radius: 50%;
-        border: 2px solid var(--color-background-secondary);
-        height: calc(var(--text-base-size)*4);
-        width: calc(var(--text-base-size)*4);
-      }
-    }
-  }
+  // .friend {
+  //   &__photo {
+  //     // display: grid;
+  //     // place-content: center;
+  //     // // margin-bottom: var(--text-base-size);
+  //   }
+  // }
 }

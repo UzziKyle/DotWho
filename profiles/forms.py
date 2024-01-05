@@ -18,6 +18,6 @@ class RegistrationForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['bio',]
+        fields = ['bio', 'photo', ]
         exclude = ['user', ]
         

@@ -1,0 +1,25 @@
+.photo-frame {
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    overflow: hidden;
+
+    &--sm {
+        height: calc(var(--text-base-size) * 4);
+        width: calc(var(--text-base-size) * 4);
+        border: 2px solid var(--color-background-secondary);
+    }
+
+    &--lg {
+        height: calc(var(--text-base-size)* 8);
+        width: calc(var(--text-base-size)* 8);
+        border: 2px solid var(--color-background-secondary);
+        box-shadow: 0 0 8px var(--color-background-primary), 0 0 20px var(--color-background-secondary);
+    }
+
+    img {
+        height: inherit;
+        width: inherit;
+        object-fit: cover;
+    }
+  }

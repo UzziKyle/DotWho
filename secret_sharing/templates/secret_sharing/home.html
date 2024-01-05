@@ -20,8 +20,8 @@
         </div>
     </div>
     <div class='home-page__content'>
+        {% if secrets %}
         <ul class='card-container'>
-            {% if secrets %}
             {% for secret in secrets %}
             <li class='card secret'>
                 <div class='secret__title'>
@@ -59,10 +59,12 @@
                 </div>
             </li>
             {% endfor %}
-            {% else %}
-            <span>No secrets found...</span>
-            {% endif %}
         </ul>
+        {% else %}
+        <div class="empty-page-message">
+            <span>No secrets found...</span>
+        </div>
+        {% endif %}
     </div>
     <div class="home-page__footer">
         {% include "includes/pagination.html" %}

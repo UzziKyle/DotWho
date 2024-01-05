@@ -4,6 +4,7 @@
     text-align: center;
     padding-block: calc(var(--text-base-size) * 3);
     padding-inline: calc(var(--text-base-size) * 1.5);
+    min-height: 65vh;
 
     @include m.respond-to('medium') {
         padding-inline: calc(var(--text-base-size) * 3);
@@ -32,5 +33,9 @@
 
     &__content {
         margin-bottom: calc(var(--text-base-size) * 3);
+
+        .empty-page-message {
+            padding-block: calc(var(--text-base-size) * 3);
+        }
     }
 }
